@@ -2,12 +2,12 @@
 
 # Variables example
 
-# name = 'Michael'
+# name <- 'Michael'
 
-surname = 'Vietluzhskih'
+surname <- 'Vietluzhskih'
 
-msg = 'Message'
+msg <- 'Message'
 
-name = 'Michael1'
+name <- 'Michael1'
 
-great = '='
+great <- '='

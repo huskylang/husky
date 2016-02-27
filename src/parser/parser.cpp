@@ -12,6 +12,8 @@
 
 #include "inc/file_modifier.hpp"
 
+#include "inc/function_caller.hpp"
+
 // #include "passports/string.hpp"
 
 using namespace husky;
@@ -25,8 +27,6 @@ Parser::Parser(FileHandler *filehandler, OutputHandler *outhandler, bool (*is_en
 {
     this->filehandler = filehandler;
     this->outhandler = outhandler;
-
-    // this->file_modifier = new FileModifier;
 
     this->is_end = is_end;
 
@@ -73,24 +73,29 @@ bool Parser::checkVarname(std::string name)
  * Creates and adds a variable to the scope
  *
  */
-void Parser::createVariable(std::string varname, char ch)
+datatypes::AbstractDataType *Parser::createVariable(char ch)
 {
     // variable pointer
     datatypes::AbstractDataType *var;
 
     // indentifying datatype
 
-    if (ch == '\'') { // string
+    if (ch == '(') { // function call
+        this->linei++;
+        var = function_caller::call(this);
+
+        return var;
+    } else if (ch == '\'') { // string
         this->linei++;
         var = new datatypes::String(this);
     } else {
         this->outhandler->error("(datatype indentifyer)", "error when indentifying datatype", this->line, this->linen, this->linei);
-        return;
+        return var;
     }
 
     var->parse();
 
-    addVariable(var, varname);
+    return var;
 }
 
 /*
@@ -148,7 +153,9 @@ void Parser::parse()
                     // turn on comment block
                     is_comment = true;
                     varname = ""; // null the varname
-                } else if (this->line[this->linei] == '=') {
+                } else if (this->line[this->linei] == '<' && this->line[this->linei + 1] == '-') {
+                    this->linei++; // skip '-' character
+
                     if (this->checkVarname(varname)) {
                         break;
                     } else {
@@ -156,6 +163,9 @@ void Parser::parse()
                         is_varname = false;
                         is_varvalue = true;
                     }
+                } else if (this->line[this->linei] == '(') {
+                    this->linei++; // skip '(' character
+                    function_caller::call(this);
                 } else if (this->line[this->linei] == '-') {
                     // Parse file modifier
                     this->linei++; // skip '-' character
@@ -164,7 +174,9 @@ void Parser::parse()
                     if (is_varname) {
                         varname += this->line[this->linei]; // add character to varname
                     } else if (is_varvalue) {
-                        createVariable(varname, this->line[this->linei]);
+                        // create and add variable
+                        addVariable(createVariable(this->line[this->linei]), varname);
+
                         varname = true;
                         is_varvalue = false;
                         varname = ""; // null the varname
@@ -195,6 +207,4 @@ void Parser::clean()
         delete this->variables[this->variables_len]->getValue(); // var cleanup
         delete this->variables[this->variables_len]; // delete
     }
-
-    // delete file_modifier;
 }

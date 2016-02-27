@@ -20,8 +20,6 @@ namespace husky {
         private:
             bool (*is_end)(char); // function to check if need to stop parsing
 
-            // FileModifier *file_modifier;
-
             // passports::AbstractPassport *datatypes_supported[1];
             //
             // int datatypes_supported_len = 1;
@@ -32,7 +30,7 @@ namespace husky {
             void parse();
             void clean();
             void addVariable(datatypes::AbstractDataType*, std::string);
-            void createVariable(std::string varname, char ch);
+            datatypes::AbstractDataType *createVariable(char ch);
 
             // variables
 

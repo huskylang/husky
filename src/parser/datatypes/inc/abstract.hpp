@@ -1,5 +1,5 @@
-#ifndef ABSTRACT_HPP
-#define ABSTRACT_HPP
+#ifndef ABSTRACT_DATATYPE_HPP
+#define ABSTRACT_DATATYPE_HPP
 
 namespace husky { namespace datatypes {
 

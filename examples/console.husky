@@ -1,6 +1,7 @@
 -scrpt console
 
-main = & :-
-    cs:out('Hello, World')
-    cs:out('Hi')
-    cs:out('Try more').
+test <- 'Test'
+
+(cs:out 'Hello, World')
+(cs:out 'Hi')
+(cs:out 'Try more' ' [space] ' 'It is useless')

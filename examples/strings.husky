@@ -1,6 +1,6 @@
 -scrpt strings
 
-varsdf = []
+varsdf <- []
 
-name = 'hello'
-surname = 'hi'
+name <- 'hello'
+surname <- 'hi'
