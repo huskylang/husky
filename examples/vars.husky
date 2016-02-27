@@ -1,0 +1,13 @@
+-scrpt vars
+
+# Variables example
+
+# name = 'Michael'
+
+surname = 'Vietluzhskih'
+
+msg = 'Message'
+
+name = 'Michael1'
+
+great = '='

@@ -1,0 +1,5 @@
+-scrpt(functions).
+
+divide = & (n1, n2) :- n1 / n2.
+
+main = & :- cs:out("divide(1, 2)).

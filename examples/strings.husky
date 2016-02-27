@@ -1,0 +1,6 @@
+-scrpt strings
+
+varsdf = []
+
+name = 'hello'
+surname = 'hi'

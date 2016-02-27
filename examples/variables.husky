@@ -1,0 +1,7 @@
+-scrpt variables.
+
+main :=
+    number = 1
+    number2 = number + 1
+
+    cs:out('number ' ^ "number ^ ' ' ^ "number2).

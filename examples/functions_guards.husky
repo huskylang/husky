@@ -1,0 +1,10 @@
+-scrpt(functions_guards),
+
+is_zero = &
+    (n) when (n = 0) :- true;
+    (n) when (n /= 0) :- false.
+
+main :=
+    cs:out("is_zero(1)),
+    cs:endl(),
+    cs:out("is_zero(0)).

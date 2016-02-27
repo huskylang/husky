@@ -1,0 +1,6 @@
+-scrpt console
+
+main = & :-
+    cs:out('Hello, World')
+    cs:out('Hi')
+    cs:out('Try more').
