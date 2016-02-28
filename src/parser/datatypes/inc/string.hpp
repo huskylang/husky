@@ -15,6 +15,7 @@ namespace husky { namespace datatypes {
         public:
             String(husky::Parser*, std::string);
             ~String() { };
+            virtual AbstractDataType *copy();
             virtual std::string getStrValue();
             virtual void cleanup();
             virtual void parse();

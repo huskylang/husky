@@ -8,7 +8,8 @@ FILES := \
 	src/parser/variable.cpp \
 	src/parser/datatypes/string.cpp \
 	src/parser/file_modifier.cpp \
-	src/parser/function_caller.cpp
+	src/parser/function_caller.cpp \
+	src/parser/variable_utils.cpp
 
 include stdlib/stdlib.conf
 
@@ -21,7 +22,7 @@ wall:
 
 valgr:
 	mkdir -p bin
-	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all ./bin/husky examples/console.husky
+	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all ./bin/husky examples/strings.husky
 	# valgrind ./bin/husky examples/vars.husky
 
 clean:

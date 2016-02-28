@@ -13,6 +13,7 @@ namespace husky { namespace datatypes {
         public:
             virtual ~AbstractDataType() { };
             virtual void parse() = 0;
+            virtual AbstractDataType *copy() = 0;
             virtual void cleanup() {};
             virtual std::string getStrValue() {return "";};
             virtual int getIntValue() {return 0;};

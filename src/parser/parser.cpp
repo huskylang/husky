@@ -1,4 +1,5 @@
 #include <string>
+
 #include "datatypes/inc/abstract.hpp"
 #include "inc/variable.hpp"
 
@@ -9,15 +10,24 @@
 #include "datatypes/inc/abstract.hpp"
 #include "datatypes/inc/string.hpp"
 
-#include "inc/parser.hpp"
-
 #include "inc/file_modifier.hpp"
-
 #include "inc/function_caller.hpp"
 
-// #include "passports/string.hpp"
+#include "inc/parser.hpp"
+
+#include "inc/variable_utils.hpp"
 
 using namespace husky;
+
+
+/*
+ * Checks if this character is supported in variables and function calls
+ *
+ */
+bool is_var_function_call(char ch)
+{
+    return (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || (ch == ':');
+}
 
 
 /*
@@ -27,14 +37,11 @@ using namespace husky;
 Parser::Parser(FileHandler *filehandler, OutputHandler *outhandler, InputHandler *inhandler, bool (*is_end)(char))
 {
     this->filehandler = filehandler;
+
     this->outhandler = outhandler;
     this->inhandler = inhandler;
 
     this->is_end = is_end;
-
-    // Initialize supported datatypes
-
-    // datatypes_supported[0] = new passports::StringPassport();
 }
 
 /*
@@ -78,21 +85,35 @@ bool Parser::checkVarname(std::string name)
 datatypes::AbstractDataType *Parser::createVariable(char ch)
 {
     // variable pointer
-    datatypes::AbstractDataType *var;
+    datatypes::AbstractDataType *var = NULL;
+
+    std::string varname = "";
 
     // indentifying datatype
 
-    if (ch == '(') { // function call
-        this->linei++;
-        var = function_caller::call(this);
+    if (is_var_function_call(ch)) { // is function_call or a variable
+        // read varname
+        for (; this->linei < this->line.length() && is_var_function_call(this->line[this->linei]); this->linei++)
+        {
+            varname += this->line[this->linei];
+        }
+
+        if (this->line[this->linei] == '(') { // it is a function call
+            this->linei++;
+            var = function_caller::call(this, varname);
+        } else { // it is a variable
+            this->linei--;
+            var = variable::getVar(this, varname)->getValue()->copy();
+        }
 
         return var;
+
     } else if (ch == '\'') { // string
         this->linei++;
         var = new datatypes::String(this, "");
     } else {
         this->outhandler->error("(datatype indentifyer)", "error when indentifying datatype", this->line, this->linen, this->linei);
-        return var;
+        return NULL;
     }
 
     var->parse();
@@ -109,8 +130,8 @@ void Parser::parse()
 
     datatypes::AbstractDataType *var;
 
-    // used to print character if needed
     std::string varname = "";
+    std::string funname = "";
     std::string line;
 
     // blocks declarations
@@ -137,6 +158,7 @@ void Parser::parse()
         is_varvalue = false;
 
         varname = ""; // null the varname
+        funname = ""; // null the funname
 
         for (this->linei = 0; this->linei < this->line.length(); this->linei++) {
 
@@ -170,13 +192,7 @@ void Parser::parse()
                     }
                 } else if (this->line[this->linei] == '(') {
                     this->linei++; // skip '(' character
-                    var = function_caller::call(this);
-
-                    if (varname != "") {
-                        addVariable(var, varname);
-                    } else {
-                        // delete var;
-                    }
+                    var = function_caller::call(this, varname);
                 } else if (this->line[this->linei] == '-') {
                     // Parse file modifier
                     this->linei++; // skip '-' character
@@ -186,7 +202,10 @@ void Parser::parse()
                         varname += this->line[this->linei]; // add character to varname
                     } else if (is_varvalue) {
                         // create and add variable
-                        addVariable(createVariable(this->line[this->linei]), varname);
+                        var = createVariable(this->line[this->linei]);
+
+                        if (var != NULL)
+                            addVariable(var, varname);
 
                         varname = true;
                         is_varvalue = false;
@@ -196,12 +215,6 @@ void Parser::parse()
             }
         }
     }
-
-    // Memory Cleanup
-
-    // for (datatypes_supported_len--; datatypes_supported_len >= 0; datatypes_support_len--) {
-    //     delete datatypes_supported[datatypes_support_len];
-    // }
 }
 
 

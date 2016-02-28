@@ -11,6 +11,7 @@ Variable::Variable(datatypes::AbstractDataType *value, std::string name)
     this->value = value;
 }
 
+
 /**
  ** Getters
  **

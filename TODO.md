@@ -1,23 +1,25 @@
 # TODO:
 
-1. create a std library as a git submodule --
+1. do strings automatically parse escape characters like '\n' or '\\' or '\''
 
-2. do strings automatically parse escape characters like '\n' or '\\' or '\''
+2. make variables manager check variable contents
 
-3. make variables manager check variable contents
+3. All types are anonymous. You assign a function to variable --
 
-4. http://www.tutorialspoint.com/cplusplus/cpp_interfaces.htm --
+4. strings as lists strategy
 
-5. All types are anonymous. You assign a function to variable --
+5. function call as mod:fun(arg1, arg2, mod:fun())
 
-6. strings as lists strategy
+6. boolean expressions as = < >= =< /=
 
-7. function call as (func (func1 arg1 arg3) arg2) --
+7. boolean types 'yes' and 'no'
 
-8. variable match and assign as var <- value --
+8. status words are 'good' and 'bad'
 
-9. boolean expressions as = < >= =< /=
+9. atoms with @ (examples: @good @bad @yes @no) ++++++++++++++++++
 
-10. bool types 'yes' and 'no'
+10. list index with | (examples: list|index polls|0)
 
-11. status words are 'good' and 'bad'
+11. make getVar a method of the Parser class
+
+12. add unit testing

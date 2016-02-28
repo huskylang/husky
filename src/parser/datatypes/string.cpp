@@ -12,6 +12,15 @@ String::String(husky::Parser *parser, std::string value)
 }
 
 /*
+ * Copy Method
+ *
+ */
+AbstractDataType *String::copy()
+{
+    return new String(this->parser, this->value);
+}
+
+/*
  * Parses variable value up to "'"
  *
  */

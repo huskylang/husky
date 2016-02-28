@@ -16,7 +16,7 @@ using namespace husky;
 void throw_eol_error(Parser *parser)
 {
     parser->outhandler->error(
-        "(function_caller)", "unexpected eol",
+        "(function caller)", "unexpected eol",
         parser->line, parser->linen, parser->linei
     );
 }
@@ -25,10 +25,8 @@ void throw_eol_error(Parser *parser)
  * Parses function call like '(cs:out 'hello')'
  *
  */
-datatypes::AbstractDataType *function_caller::call(Parser *parser)
+datatypes::AbstractDataType *function_caller::call(Parser *parser, std::string funname)
 {
-    std::string funname = "";
-
     datatypes::AbstractDataType *retval;
 
     int len = 0;
@@ -36,28 +34,28 @@ datatypes::AbstractDataType *function_caller::call(Parser *parser)
     datatypes::AbstractDataType **arglist;
 
 
-    // skip all spaces before funname
-
-    while (parser->line[parser->linei] == ' ' || parser->line[parser->linei] == '\n') {
-        if (parser->linei >= parser->line.length()) {
-            throw_eol_error(parser);
-            return retval;
-        }
-
-        parser->linei++;
-    }
-
-    // parse funname up to the first space
-
-    while (parser->line[parser->linei] != ' ') {
-        if (parser->linei >= parser->line.length()) {
-            throw_eol_error(parser);
-            return retval;
-        }
-
-        funname += parser->line[parser->linei];
-        parser->linei++;
-    }
+    // // skip all spaces before funname
+    //
+    // while (parser->line[parser->linei] == ' ' || parser->line[parser->linei] == '\n') {
+    //     if (parser->linei >= parser->line.length()) {
+    //         throw_eol_error(parser);
+    //         return retval;
+    //     }
+    //
+    //     parser->linei++;
+    // }
+    //
+    // // parse funname up to the first space
+    //
+    // while (parser->line[parser->linei] != ' ') {
+    //     if (parser->linei >= parser->line.length()) {
+    //         throw_eol_error(parser);
+    //         return retval;
+    //     }
+    //
+    //     funname += parser->line[parser->linei];
+    //     parser->linei++;
+    // }
 
     // initialize a list of arguments
 
@@ -82,11 +80,9 @@ datatypes::AbstractDataType *function_caller::call(Parser *parser)
             arglist, len * sizeof(datatypes::AbstractDataType) * sizeof(datatypes::AbstractDataType)
         );
 
-        // parser->outhandler->print(std::to_string(len) + '\n');
-
         // skip all spaces before value
 
-        while (parser->line[parser->linei] == ' ' || parser->line[parser->linei] == '\n') {
+        while (parser->line[parser->linei] == ' ' || parser->line[parser->linei] == ',' || parser->line[parser->linei] == '\n') {
             parser->linei++;
         }
 
@@ -101,10 +97,11 @@ datatypes::AbstractDataType *function_caller::call(Parser *parser)
 
     for (len--; len >= 0; len--) {
         // parser->outhandler->printline("arg: " + arglist[len]->getStrValue());
-        delete arglist[len];
+        if (arglist[len])
+            delete arglist[len];
     }
 
-    free(arglist);
+    free(arglist); // memory cleanup
 
     return retval;
 }

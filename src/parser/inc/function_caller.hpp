@@ -3,7 +3,7 @@
 
 namespace husky { namespace function_caller {
 
-    husky::datatypes::AbstractDataType *call(husky::Parser *);
+    husky::datatypes::AbstractDataType *call(husky::Parser *, std::string);
 
 }}
 

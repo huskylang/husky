@@ -2,10 +2,18 @@
 
 test <- 'Test'
 
-(cs:out 'Your name: ')
+# (cs:outl 'Hello' (cs:inl (cs:out 'Your name: ')) ' ' (cs:inl (cs:out 'Your surname: ')))
 
-name <- (cs:inl '')
+cs:out('Your name: ')
 
-(cs:outl 'Hello, World')
-(cs:outl 'Hi')
-(cs:outl 'Try more' ' ' 'It is useless')
+surname <- cs:inl()
+
+cs:out('You surname: ')
+
+cs:outl(surname, ' ', cs:inl())
+
+cs:outl()
+
+cs:outl('Hello, World')
+cs:outl('Hi')
+cs:outl('Try more', ' ', 'It is useless')

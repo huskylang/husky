@@ -1,6 +1,12 @@
 -scrpt strings
 
-varsdf <- []
+cs:out('Your name: ')
+
+name <- cs:inl()
+
+cs:outl('Your name is ', name)
 
 name <- 'hello'
 surname <- 'hi'
+
+name1 <- name
