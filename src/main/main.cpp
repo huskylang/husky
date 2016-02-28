@@ -1,6 +1,7 @@
 #include <string>
 #include <exception>
 #include <iostream>
+#include <fstream>
 
 #include "inc/argparser.hpp"
 #include "inc/filehandler.hpp"
@@ -15,6 +16,7 @@ using namespace husky;
 ArgParser *argparser;
 OutputHandler *outhandler;
 FileHandler *filehandler;
+InputHandler *inhandler;
 Parser *parser;
 
 
@@ -31,6 +33,8 @@ int main(int argc, char *argv[])
 {
     outhandler = new OutputHandler();
 
+    outhandler->info("(system)", "loaded output handler");
+
     try {
         // Initialize main classes
 
@@ -44,9 +48,13 @@ int main(int argc, char *argv[])
         outhandler->info("(system)", "loaded file");
 
 
+        inhandler = new InputHandler(&std::cin);
+
+        outhandler->info("(system)", "loaded input handler");
+
         // create parser
 
-        parser = new Parser(filehandler, outhandler, is_end); // is_end is a function
+        parser = new Parser(filehandler, outhandler, inhandler, is_end); // is_end is a function
 
         outhandler->info("(system)", "loaded parser");
 
@@ -66,6 +74,7 @@ int main(int argc, char *argv[])
         outhandler->success("(system)", "ok");
 
         delete outhandler;
+        delete inhandler;
 
         return 0;
     } catch (std::string e) {
@@ -73,13 +82,19 @@ int main(int argc, char *argv[])
 
         outhandler->error("(critical)", e, "", 0, 0);
 
-        delete outhandler; // memory cleanup
+        // memory cleanup
+
+        delete outhandler;
+        delete inhandler;
     } catch (std::exception e) {
         // Catch system errors
 
         outhandler->error("(critical, system)", e.what(), "", 0, 0);
 
-        delete outhandler; // memory cleanup
+        // memory cleanup
+
+        delete outhandler;
+        delete inhandler;
     }
 
     return 1;

@@ -7,6 +7,7 @@
 // #include "../passports/abstract.hpp"
 
 #include "../../main/inc/outputhandler.hpp"
+#include "../../main/inc/inputhandler.hpp"
 #include "../../main/inc/filehandler.hpp"
 
 namespace husky {
@@ -25,7 +26,7 @@ namespace husky {
             // int datatypes_supported_len = 1;
 
         public:
-            Parser(FileHandler*, OutputHandler*, bool (*)(char)); // bool (*)(char) is function pointer
+            Parser(FileHandler*, OutputHandler*, InputHandler*, bool (*)(char)); // bool (*)(char) is function pointer
             bool checkVarname(std::string);
             void parse();
             void clean();
@@ -39,6 +40,7 @@ namespace husky {
 
             OutputHandler *outhandler;
             FileHandler *filehandler;
+            InputHandler *inhandler;
 
             Variable *variables[20]; // array of variables in this scope
             int variables_len = 0;

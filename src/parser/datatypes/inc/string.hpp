@@ -9,11 +9,11 @@ namespace husky { namespace datatypes {
     class String : public AbstractDataType
     {
         private:
-            std::string value = "";
+            std::string value;
             husky::Parser *parser;
 
         public:
-            String(husky::Parser*);
+            String(husky::Parser*, std::string);
             ~String() { };
             virtual std::string getStrValue();
             virtual void cleanup();

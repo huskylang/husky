@@ -2,6 +2,10 @@
 
 test <- 'Test'
 
-(cs:out 'Hello, World')
-(cs:out 'Hi')
-(cs:out 'Try more' ' [space] ' 'It is useless')
+(cs:out 'Your name: ')
+
+name <- (cs:inl '')
+
+(cs:outl 'Hello, World')
+(cs:outl 'Hi')
+(cs:outl 'Try more' ' ' 'It is useless')

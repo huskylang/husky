@@ -5,9 +5,10 @@
 
 using namespace husky::datatypes;
 
-String::String(husky::Parser *parser)
+String::String(husky::Parser *parser, std::string value)
 {
     this->parser = parser;
+    this->value = value;
 }
 
 /*

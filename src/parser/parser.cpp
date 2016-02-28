@@ -3,6 +3,7 @@
 #include "inc/variable.hpp"
 
 #include "../main/inc/outputhandler.hpp"
+#include "../main/inc/inputhandler.hpp"
 #include "../main/inc/filehandler.hpp"
 
 #include "datatypes/inc/abstract.hpp"
@@ -23,10 +24,11 @@ using namespace husky;
  * bool (*)(char) is a function pointer
  *
  */
-Parser::Parser(FileHandler *filehandler, OutputHandler *outhandler, bool (*is_end)(char))
+Parser::Parser(FileHandler *filehandler, OutputHandler *outhandler, InputHandler *inhandler, bool (*is_end)(char))
 {
     this->filehandler = filehandler;
     this->outhandler = outhandler;
+    this->inhandler = inhandler;
 
     this->is_end = is_end;
 
@@ -87,7 +89,7 @@ datatypes::AbstractDataType *Parser::createVariable(char ch)
         return var;
     } else if (ch == '\'') { // string
         this->linei++;
-        var = new datatypes::String(this);
+        var = new datatypes::String(this, "");
     } else {
         this->outhandler->error("(datatype indentifyer)", "error when indentifying datatype", this->line, this->linen, this->linei);
         return var;
@@ -104,6 +106,9 @@ datatypes::AbstractDataType *Parser::createVariable(char ch)
  */
 void Parser::parse()
 {
+
+    datatypes::AbstractDataType *var;
+
     // used to print character if needed
     std::string varname = "";
     std::string line;
@@ -165,7 +170,13 @@ void Parser::parse()
                     }
                 } else if (this->line[this->linei] == '(') {
                     this->linei++; // skip '(' character
-                    function_caller::call(this);
+                    var = function_caller::call(this);
+
+                    if (varname != "") {
+                        addVariable(var, varname);
+                    } else {
+                        // delete var;
+                    }
                 } else if (this->line[this->linei] == '-') {
                     // Parse file modifier
                     this->linei++; // skip '-' character
@@ -201,7 +212,8 @@ void Parser::parse()
 void Parser::clean()
 {
     for (this->variables_len--; this->variables_len >= 0; this->variables_len--) {
-        this->outhandler->printline(this->variables[this->variables_len]->getName()); // printing name
+        this->outhandler->print(this->variables[this->variables_len]->getName()); // printing name
+        this->outhandler->print(" = ");
         this->outhandler->printline(this->variables[this->variables_len]->getValue()->getStrValue()); // printing value
 
         delete this->variables[this->variables_len]->getValue(); // var cleanup

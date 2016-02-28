@@ -5,6 +5,8 @@
 
 #include "inc/function_caller.hpp"
 
+#include "../../stdlib/inc/router.hpp"
+
 using namespace husky;
 
 /*
@@ -80,7 +82,7 @@ datatypes::AbstractDataType *function_caller::call(Parser *parser)
             arglist, len * sizeof(datatypes::AbstractDataType) * sizeof(datatypes::AbstractDataType)
         );
 
-        parser->outhandler->print(std::to_string(len) + '\n');
+        // parser->outhandler->print(std::to_string(len) + '\n');
 
         // skip all spaces before value
 
@@ -89,14 +91,16 @@ datatypes::AbstractDataType *function_caller::call(Parser *parser)
         }
 
         arglist[len - 1] = parser->createVariable(parser->line[parser->linei]); // append to the list of arguments
-        
+
         parser->linei++;
     }
 
-    parser->outhandler->printline("funname: " + funname);
+    retval = stdlib::run(parser, funname, arglist, len); // run function
+
+    // parser->outhandler->printline("funname: " + funname);
 
     for (len--; len >= 0; len--) {
-        parser->outhandler->printline("arg: " + arglist[len]->getStrValue());
+        // parser->outhandler->printline("arg: " + arglist[len]->getStrValue());
         delete arglist[len];
     }
 
