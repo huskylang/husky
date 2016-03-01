@@ -1,6 +1,7 @@
 # Husky Programming Language
 __Very early stage of development__
 
+[![Gitter](https://badges.gitter.im/huskylang/husky.svg)](https://gitter.im/huskylang/husky?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 ## Build
 ```bash
