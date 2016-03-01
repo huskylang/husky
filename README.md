@@ -1,4 +1,4 @@
-# Husky Lang
+# Husky Programming Language
 __Very early stage of development__
 
 
@@ -12,4 +12,4 @@ make
 ./bin/husky examples/vars.husky
 ```
 
-Copyright (c) Michael Vietluzhskih
+Copyright (C) 2016 Michael Vietluzhskih
