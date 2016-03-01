@@ -11,7 +11,7 @@ FILES := \
 	src/parser/function_caller.cpp \
 	src/parser/variable_utils.cpp
 
-include stdlib/stdlib.conf
+include src/stdlib/stdlib.conf
 
 all:
 	mkdir -p bin

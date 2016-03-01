@@ -5,7 +5,7 @@
 
 #include "inc/function_caller.hpp"
 
-#include "../../stdlib/inc/router.hpp"
+#include "../stdlib/inc/router.hpp"
 
 using namespace husky;
 
