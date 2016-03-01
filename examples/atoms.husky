@@ -1,0 +1,7 @@
+-scrpt atoms
+
+atom <- @atom
+
+status <- @good # or @bad
+
+is_good <- @yes # or @no

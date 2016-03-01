@@ -1,19 +1,19 @@
 -scrpt console
 
-test <- 'Test'
-
-# (cs:outl 'Hello' (cs:inl (cs:out 'Your name: ')) ' ' (cs:inl (cs:out 'Your surname: ')))
-
 cs:out('Your name: ')
 
-surname <- cs:inl()
+name <- cs:inl()
 
 cs:out('You surname: ')
 
-cs:outl(surname, ' ', cs:inl())
+surname <- cs:inl()
+
+cs:outl(name, ' ', surname)
 
 cs:outl()
 
-cs:outl('Hello, World')
-cs:outl('Hi')
-cs:outl('Try more', ' ', 'It is useless')
+# cs:outl('Hello, World')
+# cs:outl('Hi')
+# cs:outl('Try more', ' ', 'It is useless')
+
+# cs:outl(cs:inl(cs:out('Your name: ')), ' ', cs:inl(cs:out('Your surname: ')))
