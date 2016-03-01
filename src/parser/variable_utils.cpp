@@ -3,8 +3,6 @@
 #include "inc/variable.hpp"
 #include "inc/parser.hpp"
 
-#include "inc/variable_utils.hpp"
-
 using namespace husky;
 
 /*
@@ -13,19 +11,19 @@ using namespace husky;
  * If the variable does not exist returns NULL pointer
  *
  */
-Variable *variable::getVar(Parser *parser, std::string varname)
+Variable *Parser::getVar(std::string varname)
 {
     int i = 0;
 
-    for (i = 0; i < parser->variables_len; i++) {
-        if (parser->variables[i]->getName() == varname) {
-            return parser->variables[i];
+    for (i = 0; i < this->variables_len; i++) {
+        if (this->variables[i]->getName() == varname) {
+            return this->variables[i];
         }
     }
 
-    parser->outhandler->error(
+    this->outhandler->error(
         "(variable finder)", "variable '" + varname + "' does not exist",
-        parser->line, parser->linen, parser->linei
+        this->line, this->linen, this->linei
     );
 
     return NULL;

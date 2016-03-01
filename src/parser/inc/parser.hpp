@@ -2,9 +2,7 @@
 #define PARSER_HPP
 
 #include "variable.hpp"
-// #include "file_modifier.hpp"
-#include "../datatypes/inc/abstract.hpp"
-// #include "../passports/abstract.hpp"
+// #include "../datatypes/inc/abstract.hpp"
 
 #include "../../main/inc/outputhandler.hpp"
 #include "../../main/inc/inputhandler.hpp"
@@ -32,6 +30,7 @@ namespace husky {
             void clean();
             void addVariable(datatypes::AbstractDataType*, std::string);
             datatypes::AbstractDataType *createVariable(char ch);
+            Variable *getVar(std::string);
 
             // variables
 

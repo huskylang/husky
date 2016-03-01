@@ -8,18 +8,22 @@
 
 4. strings as lists strategy
 
-5. function call as mod:fun(arg1, arg2, mod:fun())
+5. boolean expressions as = < >= =< /=
 
-6. boolean expressions as = < >= =< /=
+6. boolean types 'yes' and 'no'
 
-7. boolean types 'yes' and 'no'
+7. status words are 'good' and 'bad'
 
-8. status words are 'good' and 'bad'
+8. atoms with @ (examples: @good @bad @yes @no) (implemented but not tested)
 
-9. atoms with @ (examples: @good @bad @yes @no) ++++++++++++++++++
+9. list index with | (examples: list|index polls|0)
 
-10. list index with | (examples: list|index polls|0)
+10. add unit testing ++++++++++++++++++
 
-11. make getVar a method of the Parser class
+11. getBoolValue() in absdatatype for atom
 
-12. add unit testing
+12. make datatype router
+
+13. add modifer of variable (like ? modifier which will null the variable)
+
+14. throwing errors in absdatatype when trying to call wrong value getter

@@ -10,7 +10,7 @@ surname <- cs:inl()
 
 cs:outl(name, ' ', surname)
 
-cs:outl()
+cs:outl('cs:outl() returns: ', cs:outl())
 
 # cs:outl('Hello, World')
 # cs:outl('Hi')

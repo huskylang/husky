@@ -9,7 +9,8 @@ FILES := \
 	src/parser/datatypes/string.cpp \
 	src/parser/file_modifier.cpp \
 	src/parser/function_caller.cpp \
-	src/parser/variable_utils.cpp
+	src/parser/variable_utils.cpp \
+	src/parser/datatypes/atom.cpp
 
 include src/stdlib/stdlib.conf
 

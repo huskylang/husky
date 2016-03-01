@@ -9,13 +9,12 @@
 
 #include "datatypes/inc/abstract.hpp"
 #include "datatypes/inc/string.hpp"
+#include "datatypes/inc/atom.hpp"
 
 #include "inc/file_modifier.hpp"
 #include "inc/function_caller.hpp"
 
 #include "inc/parser.hpp"
-
-#include "inc/variable_utils.hpp"
 
 using namespace husky;
 
@@ -103,11 +102,14 @@ datatypes::AbstractDataType *Parser::createVariable(char ch)
             var = function_caller::call(this, varname);
         } else { // it is a variable
             this->linei--;
-            var = variable::getVar(this, varname)->getValue()->copy();
+            var = this->getVar(varname)->getValue()->copy();
         }
 
         return var;
 
+    } else if (ch == '@') { // atom
+        this->linei++;
+        var = new datatypes::Atom(this, "");
     } else if (ch == '\'') { // string
         this->linei++;
         var = new datatypes::String(this, "");
@@ -193,6 +195,10 @@ void Parser::parse()
                 } else if (this->line[this->linei] == '(') {
                     this->linei++; // skip '(' character
                     var = function_caller::call(this, varname);
+
+                    if (!is_varvalue) { // if function retval is not used
+                        delete var; // deleting var
+                    }
                 } else if (this->line[this->linei] == '-') {
                     // Parse file modifier
                     this->linei++; // skip '-' character
