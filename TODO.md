@@ -22,7 +22,7 @@
 
 11. getBoolValue() in absdatatype for atom
 
-12. make datatype router
+12. make datatype router +++++
 
 13. add modifer of variable (like ? modifier which will null the variable)
 

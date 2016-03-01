@@ -1,16 +1,17 @@
 -scrpt console
 
-cs:out('Your name: ')
+# cs:out('Your name: ')
+#
+# name <- cs:inl()
+#
+# cs:out('You surname: ')
+#
+# surname <- cs:inl()
+#
+# cs:outl(name, ' ', surname, ' ')
+cs:outl('this must be yes: ', @yes) # see it -- -
 
-name <- cs:inl()
-
-cs:out('You surname: ')
-
-surname <- cs:inl()
-
-cs:outl(name, ' ', surname)
-
-cs:outl('cs:outl() returns: ', cs:outl())
+# cs:outl('cs:outl() returns: ', cs:outl())
 
 # cs:outl('Hello, World')
 # cs:outl('Hi')

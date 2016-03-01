@@ -23,7 +23,7 @@ wall:
 
 valgr:
 	mkdir -p bin
-	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all ./bin/husky examples/strings.husky
+	valgrind --tool=memcheck --leak-check=full --show-leak-kinds=all ./bin/husky examples/console.husky
 	# valgrind ./bin/husky examples/vars.husky
 
 clean:

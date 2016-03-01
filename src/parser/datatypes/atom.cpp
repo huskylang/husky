@@ -30,9 +30,12 @@ bool is_alpha(char ch)
  */
 void Atom::parse()
 {
-    while (is_alpha(this->parser->line[this->parser->linei]) \
-        && this->parser->linei < this->parser->line.length()
-    ) {
+    while (this->parser->linei < this->parser->line.length()) {
+        if (!is_alpha(this->parser->line[this->parser->linei])) {
+            this->parser->linei--;
+            break;
+        }
+
         value += this->parser->line[this->parser->linei];
         this->parser->linei++;
     }
