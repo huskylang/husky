@@ -22,14 +22,12 @@
 
 11. getBoolValue() in absdatatype for atom
 
-12. make datatype router +++++
+12. add modifer of variable (like " modifier which will return string value of the variable)
 
-13. add modifer of variable (like " modifier which will return string value of the variable)
+13. throwing errors in absdatatype when trying to call wrong value getter
 
-14. throwing errors in absdatatype when trying to call wrong value getter
+14. make function call with
 
-15. make function call with
+15. create function datatype
 
-16. create function datatype
-
-17. implement a website
+16. implement a website

@@ -7,9 +7,7 @@
 #include "../main/inc/inputhandler.hpp"
 #include "../main/inc/filehandler.hpp"
 
-#include "datatypes/inc/abstract.hpp"
-#include "datatypes/inc/string.hpp"
-#include "datatypes/inc/atom.hpp"
+#include "datatypes/inc/router.hpp"
 
 #include "inc/file_modifier.hpp"
 #include "inc/function_caller.hpp"
@@ -17,17 +15,6 @@
 #include "inc/parser.hpp"
 
 using namespace husky;
-
-
-/*
- * Checks if this character is supported in variables and function calls
- *
- */
-bool is_var_function_call(char ch)
-{
-    return (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || (ch == ':');
-}
-
 
 /*
  * bool (*)(char) is a function pointer
@@ -78,49 +65,12 @@ bool Parser::checkVarname(std::string name)
 
 
 /*
- * Creates and adds a variable to the scope
+ * Creates a variable
  *
  */
 datatypes::AbstractDataType *Parser::createVariable(char ch)
 {
-    // variable pointer
-    datatypes::AbstractDataType *var = NULL;
-
-    std::string varname = "";
-
-    // indentifying datatype
-
-    if (is_var_function_call(ch)) { // is function_call or a variable
-        // read varname
-        for (; this->linei < this->line.length() && is_var_function_call(this->line[this->linei]); this->linei++)
-        {
-            varname += this->line[this->linei];
-        }
-
-        if (this->line[this->linei] == '(') { // it is a function call
-            this->linei++;
-            var = function_caller::call(this, varname);
-        } else { // it is a variable
-            this->linei--;
-            var = this->getVar(varname)->getValue()->copy();
-        }
-
-        return var;
-
-    } else if (ch == '@') { // atom
-        this->linei++;
-        var = new datatypes::Atom(this, "");
-    } else if (ch == '\'') { // string
-        this->linei++;
-        var = new datatypes::String(this, "");
-    } else {
-        this->outhandler->error("(datatype indentifyer)", "error when indentifying datatype", this->line, this->linen, this->linei);
-        return NULL;
-    }
-
-    var->parse();
-
-    return var;
+    return datatypes::router(this, ch);
 }
 
 /*
