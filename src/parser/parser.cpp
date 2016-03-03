@@ -36,8 +36,19 @@ Parser::Parser(FileHandler *filehandler, OutputHandler *outhandler, InputHandler
  */
 void Parser::addVariable(datatypes::AbstractDataType *var, std::string name)
 {
-    // add variable and increment length
-    this->variables[this->variables_len++] = new Variable(var, name);
+    if (this->checkVarname(name)) {
+        if (!var->compare(this->getVar(name)->getValue())) {
+            this->outhandler->error(
+                "(variables manager)", "pattern match failed",
+                this->line, this->linen, this->linei
+            );
+        }
+
+        delete var; // deleting variable because we do not need it. we have its copy
+    } else {
+        // add variable and increment length
+        this->variables[this->variables_len++] = new Variable(var, name);
+    }
 }
 
 /*
@@ -52,10 +63,6 @@ bool Parser::checkVarname(std::string name)
 
     for (i = 0; i < this->variables_len; i++) {
         if (this->variables[i]->getName() == name) {
-            // Throwing the error
-
-            this->outhandler->error("(variables manager)", "variable: '" + name + "' has been already defined", this->line, this-> linen, this->linei);
-
             return true;
         }
     }
@@ -134,14 +141,9 @@ void Parser::parse()
                     varname = ""; // null the varname
                 } else if (this->line[this->linei] == '<' && this->line[this->linei + 1] == '-') {
                     this->linei++; // skip '-' character
-
-                    if (this->checkVarname(varname)) {
-                        break;
-                    } else {
-                        // go to the value block
-                        is_varname = false;
-                        is_varvalue = true;
-                    }
+                    // go to the value block
+                    is_varname = false;
+                    is_varvalue = true;
                 } else if (this->line[this->linei] == '(') {
                     this->linei++; // skip '(' character
                     var = function_caller::call(this, varname);
@@ -160,7 +162,7 @@ void Parser::parse()
                         // create and add variable
                         var = createVariable(this->line[this->linei]);
 
-                        if (var != NULL)
+                        if (var != NULL) // check if there are some errors
                             addVariable(var, varname);
 
                         varname = true;
@@ -181,9 +183,11 @@ void Parser::parse()
 void Parser::clean()
 {
     for (this->variables_len--; this->variables_len >= 0; this->variables_len--) {
+#ifdef VERBOSE_PRINTING
         this->outhandler->print(this->variables[this->variables_len]->getName()); // printing name
         this->outhandler->print(" = ");
         this->outhandler->printline(this->variables[this->variables_len]->getValue()->getStrValue()); // printing value
+#endif
 
         delete this->variables[this->variables_len]->getValue(); // var cleanup
         delete this->variables[this->variables_len]; // delete

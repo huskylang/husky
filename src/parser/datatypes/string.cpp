@@ -28,8 +28,6 @@ void String::parse()
 {
     char ch;
 
-    // this->parser->outhandler->printline(std::to_string(this->parser->linen) + " " + std::to_string(this->parser->linei));
-
     for (; this->parser->linei < this->parser->line.length(); this->parser->linei++) {
         ch = this->parser->line[this->parser->linei];
 
@@ -46,9 +44,19 @@ void String::parse()
     }
 }
 
+/*
+ * Checks objects to equality
+ *
+ */
+bool String::compare(AbstractDataType *string)
+{
+    return this->value == string->getStrValue();
+}
+
+
 void String::cleanup()
 {
-
+    //
 }
 
 /**

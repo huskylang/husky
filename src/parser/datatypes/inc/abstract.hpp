@@ -12,6 +12,7 @@ namespace husky { namespace datatypes {
     {
         public:
             virtual ~AbstractDataType() { };
+            virtual bool compare(AbstractDataType*) = 0;
             virtual void parse() = 0;
             virtual AbstractDataType *copy() = 0;
             virtual void cleanup() {};

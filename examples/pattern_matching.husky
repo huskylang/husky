@@ -1,0 +1,16 @@
+-scrpt pattern_matching
+
+name <- 'Michael'
+
+name <- 'Michael'
+
+name <- 'Seva'
+
+msg <- @hello
+
+msg <- @hello
+
+msg <- @hi
+
+cs:outl('msg = ', msg)
+cs:outl('name = ', name)

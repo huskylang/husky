@@ -12,6 +12,9 @@ namespace husky { namespace datatypes {
         public:
             Atom(husky::Parser *, std::string);
             ~Atom() { };
+
+            virtual bool compare(AbstractDataType*);
+
             virtual void parse();
             virtual std::string getStrValue() { return this->value; };
             virtual AbstractDataType *copy();
