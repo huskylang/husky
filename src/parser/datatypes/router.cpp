@@ -7,6 +7,7 @@
 
 #include "inc/string.hpp"
 #include "inc/atom.hpp"
+#include "inc/number.hpp"
 // #include "inc/function.hpp"
 
 #include "inc/router.hpp"
@@ -39,7 +40,7 @@ datatypes::AbstractDataType *datatypes::router(Parser *parser, char ch)
 
     if (is_var_function_call(ch)) { // is function_call or a variable
         // read varname
-        for (; parser->linei < parser->line.length() && is_var_function_call(parser->line[parser->linei]); parser->linei++)
+        for (; parser->linei < parser->line.length() && (is_var_function_call(parser->line[parser->linei]) || datatypes::is_numeric(parser->line[parser->linei])); parser->linei++)
         {
             varname += parser->line[parser->linei];
         }
@@ -60,7 +61,9 @@ datatypes::AbstractDataType *datatypes::router(Parser *parser, char ch)
     } else if (ch == '\'') { // string
         parser->linei++;
         var = new datatypes::String(parser, "");
-    } else {
+    } else if (datatypes::is_numeric(ch)) { // number
+        var = new datatypes::Number(parser, 0);
+    } else { // error
         parser->outhandler->error("(datatype indentifyer)", "error when indentifying datatype", parser->line, parser->linen, parser->linei);
         return NULL;
     }

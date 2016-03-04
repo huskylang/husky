@@ -1,0 +1,20 @@
+-scrpt numbers
+
+
+n1 <- 488
+
+; Checking Pattern Matching. Must cause a pattern match failed error
+
+n1 <- 546
+
+n2 <- 10023
+
+
+cs:out('n1 = ', n1)
+cs:outl(' (must be 488)')
+
+cs:out('n2 = ', n2)
+cs:outl(' (must be 10023)')
+
+cs:out(43)
+cs:outl(42)

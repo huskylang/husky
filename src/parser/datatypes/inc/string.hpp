@@ -9,14 +9,12 @@ namespace husky { namespace datatypes {
     class String : public AbstractDataType
     {
         private:
-            std::string value;
             husky::Parser *parser;
+            std::string value;
 
         public:
             String(husky::Parser*, std::string);
             ~String() { };
-
-            virtual bool compare(AbstractDataType *);
 
             virtual AbstractDataType *copy();
             virtual std::string getStrValue();

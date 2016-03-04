@@ -41,15 +41,6 @@ void Atom::parse()
     }
 }
 
-/*
- * Checks objects to equality
- *
- */
-bool Atom::compare(AbstractDataType *atom)
-{
-    return this->value == atom->getStrValue();
-}
-
 
 /*
  * Returns a copy of this atom

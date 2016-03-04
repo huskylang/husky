@@ -2,6 +2,6 @@
 
 atom <- @atom
 
-status <- @good # or @bad
+status <- @good ; or @bad
 
-is_good <- @yes # or @no
+is_good <- @yes ; or @no

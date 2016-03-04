@@ -2,7 +2,7 @@
 
 1. do strings automatically parse escape characters like '\n' or '\\' or '\''
 
-2. make variables manager check variable contents
+2. pattern matching like "@good <- cs:outl('Hello')" (bug)
 
 3. All types are anonymous. You assign a function to variable --
 
@@ -26,8 +26,10 @@
 
 13. throwing errors in absdatatype when trying to call wrong value getter
 
-14. make function call with
+14. make function call with code:fcall()
 
 15. create function datatype
 
 16. implement a website
+
+17. better error checking system

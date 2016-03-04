@@ -1,16 +1,19 @@
 -scrpt pattern_matching
 
 name <- 'Michael'
-
 name <- 'Michael'
-
 name <- 'Seva'
+name <- @michael
+
+; See this problems
+; date <- '
+
+another <- @MICHAEL
 
 msg <- @hello
-
 msg <- @hello
-
 msg <- @hi
 
 cs:outl('msg = ', msg)
 cs:outl('name = ', name)
+cs:outl('another = ', another)

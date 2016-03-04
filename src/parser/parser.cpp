@@ -37,7 +37,7 @@ Parser::Parser(FileHandler *filehandler, OutputHandler *outhandler, InputHandler
 void Parser::addVariable(datatypes::AbstractDataType *var, std::string name)
 {
     if (this->checkVarname(name)) {
-        if (!var->compare(this->getVar(name)->getValue())) {
+        if (var->getStrValue() != this->getVar(name)->getValue()->getStrValue()) {
             this->outhandler->error(
                 "(variables manager)", "pattern match failed",
                 this->line, this->linen, this->linei
@@ -135,7 +135,7 @@ void Parser::parse()
                     is_varvalue = false;
                 }
             } else {
-                if (this->line[this->linei] == '#') {
+                if (this->line[this->linei] == ';') {
                     // turn on comment block
                     is_comment = true;
                     varname = ""; // null the varname

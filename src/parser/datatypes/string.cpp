@@ -44,15 +44,6 @@ void String::parse()
     }
 }
 
-/*
- * Checks objects to equality
- *
- */
-bool String::compare(AbstractDataType *string)
-{
-    return this->value == string->getStrValue();
-}
-
 
 void String::cleanup()
 {

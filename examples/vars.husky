@@ -1,8 +1,8 @@
 -scrpt vars
 
-# Variables example
+; Variables example
 
-# name <- 'Michael'
+; name <- 'Michael'
 
 surname <- 'Vietluzhskih'
 
