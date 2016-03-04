@@ -7,7 +7,7 @@ using namespace husky;
 
 OutputHandler::OutputHandler()
 {
-
+    //
 }
 
 /*
@@ -16,7 +16,7 @@ OutputHandler::OutputHandler()
  */
 void OutputHandler::print(std::string msg)
 {
-    std::cout << msg;
+    (*this->stream) << msg;
 }
 
 
@@ -26,7 +26,7 @@ void OutputHandler::print(std::string msg)
  */
 void OutputHandler::printline(std::string msg)
 {
-    std::cout << msg << std::endl;
+    (*this->stream) << msg << std::endl;
 }
 
 /*
@@ -35,7 +35,7 @@ void OutputHandler::printline(std::string msg)
  */
 void OutputHandler::printchar(char ch)
 {
-    std::cout << ch;
+    (*this->stream) << ch;
 }
 
 /*
@@ -47,6 +47,8 @@ void OutputHandler::printchar(char ch)
  */
 void OutputHandler::error(const char *sect, std::string msg, std::string line, int il, int ic)
 {
+    this->stream = &std::cerr;
+
     printline("\e[" + red + "m" + "[e] " + sect + " " + msg + "\e[0m");
 
     this->print("       ");
@@ -58,6 +60,8 @@ void OutputHandler::error(const char *sect, std::string msg, std::string line, i
     }
 
     this->printline("^");
+
+    this->stream = &std::cout;
 }
 
 

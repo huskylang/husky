@@ -1,12 +1,16 @@
 #ifndef OUTPUTHANDLER_HPP
 #define OUTPUTHANDLER_HPP
 
+#include <iostream>
+
 namespace husky {
     class OutputHandler {
         private:
             const std::string red = "0;31";
             const std::string blue = "0;33";
             const std::string green = "0;32";
+
+            std::ostream *stream = &std::cout;
 
         public:
             OutputHandler();
