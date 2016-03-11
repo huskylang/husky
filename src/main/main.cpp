@@ -34,7 +34,7 @@ bool is_end(char)
 
 int main(int argc, char *argv[])
 {
-    outhandler = new OutputHandler();
+    outhandler = new OutputHandler(&std::cout);
 
 #ifdef VERBOSE_PRINTING
     outhandler->info("(system)", "loaded output handler");

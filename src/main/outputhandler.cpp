@@ -5,9 +5,9 @@
 using namespace husky;
 
 
-OutputHandler::OutputHandler()
+OutputHandler::OutputHandler(std::ostream *stream)
 {
-    //
+    this->stream = stream;
 }
 
 /*

@@ -10,10 +10,10 @@ namespace husky {
             const std::string blue = "0;33";
             const std::string green = "0;32";
 
-            std::ostream *stream = &std::cout;
+            std::ostream *stream;
 
         public:
-            OutputHandler();
+            OutputHandler(std::ostream *);
             void print(std::string);
             void printline(std::string);
             void printchar(char);
