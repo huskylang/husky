@@ -4,4 +4,6 @@ TEST_FILES += \
 	tests/test_inputhandler.cpp \
 	src/main/inputhandler.cpp \
 	tests/test_argparser.cpp \
-	src/main/argparser.cpp
+	src/main/argparser.cpp \
+	tests/test_outputhandler.cpp \
+	src/main/outputhandler.cpp

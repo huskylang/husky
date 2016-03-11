@@ -33,3 +33,5 @@
 16. implement a website
 
 17. better error checking system
+
+18. move error method to the Parser class

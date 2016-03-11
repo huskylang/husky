@@ -37,8 +37,10 @@ bool testOutput(std::string script, std::string out_to_see)
  */
 bool testStr(std::string result, std::string to_see)
 {
+    std::cout << std::endl;
+
     if (result == to_see) {
-        std::cout << std::endl << "ok" << std::endl;
+        std::cout << "ok" << std::endl;
         return false;
     }
 
@@ -53,8 +55,10 @@ bool testStr(std::string result, std::string to_see)
  */
 bool testInt(long long int result, long long int to_see)
 {
+    std::cout << std::endl;
+
     if (result == to_see) {
-        std::cout << std::endl << "ok" << std::endl;
+        std::cout << "ok" << std::endl;
         return false;
     }
 

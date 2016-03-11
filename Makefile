@@ -13,8 +13,8 @@ test:
 	mkdir -p bin
 	mkdir -p tmp
 	make
-	g++ --std c++11 -g $(TEST_FILES) -o bin/test
-	./bin/test
+	g++ --std c++11 -g $(TEST_FILES) -o bin_dev/test
+	./bin_dev/test
 
 wall:
 	mkdir -p bin
