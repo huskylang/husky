@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include "inc/test_inputhandler.hpp"
+#include "inc/test_argparser.hpp"
 
 typedef bool(*testpack)(); // testpack type for creation of array of function pointers
 
@@ -8,13 +9,14 @@ int main()
 {
     bool failed = false;
 
-    int len = 1; // add one for your test
+    int len = 2; // add one for your test
 
     testpack *funlist = (testpack*) malloc(len * sizeof(testpack));
 
     // registration of the tests
 
     funlist[0] = test_inputhandler;
+    funlist[1] = test_argparser;
 
     //
 
