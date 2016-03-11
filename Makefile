@@ -10,7 +10,7 @@ all:
 	g++ --std c++11 -g $(FILES) -o bin/husky
 
 test:
-	mkdir -p bin
+	mkdir -p bin_dev
 	mkdir -p tmp
 	make
 	g++ --std c++11 -g $(TEST_FILES) -o bin_dev/test

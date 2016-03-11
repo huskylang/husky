@@ -9,7 +9,7 @@
 
 #include "../src/main/inc/outputhandler.hpp"
 
-typedef bool(*testcase)(); // testpack type for creation of array of function pointers
+typedef bool(*testcase)(); // testcase type for creation of array of function pointers
 
 /*
 

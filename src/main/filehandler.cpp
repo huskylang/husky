@@ -50,6 +50,14 @@ bool FileHandler::eof()
     return this->file.eof();
 }
 
+/*
+ * Returns true if file is open else false
+ *
+ */
+bool FileHandler::is_open()
+{
+    return this->file.is_open();
+}
 
 /*
  * Close file
@@ -58,14 +66,4 @@ bool FileHandler::eof()
 void FileHandler::close()
 {
     this->file.close();
-}
-
-
-/*
- * Returns true if file is open else false
- *
- */
-bool FileHandler::is_open()
-{
-    return this->file.is_open();
 }

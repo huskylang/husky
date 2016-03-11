@@ -50,6 +50,42 @@ bool testStr(std::string result, std::string to_see)
 }
 
 /*
+ * Tests character output of a method or a function
+ *
+ */
+bool testChar(char ch, const char ch_to_see)
+{
+    std::cout << std::endl;
+
+    if (ch == ch_to_see) {
+        std::cout << "ok" << std::endl;
+        return false;
+    }
+
+    std::cout << "'" << ch << "' != '" << ch_to_see << "'" << std::endl;
+
+    return true;
+}
+
+/*
+ * Tests boolean output of a method or a function
+ *
+ */
+bool testBool(bool result, bool to_see)
+{
+    std::cout << std::endl;
+
+    if (result == to_see) {
+        std::cout << "ok" << std::endl;
+        return false;
+    }
+
+    std::cout << result << " != " << to_see << std::endl;
+
+    return true;
+}
+
+/*
  * Tests integer output of a method or a function
  *
  */

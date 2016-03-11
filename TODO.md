@@ -35,3 +35,7 @@
 17. better error checking system
 
 18. move error method to the Parser class
+
+19. split tests into sections (like 'main')
+
+20. remove tmp folder and use /tmp/ folder
