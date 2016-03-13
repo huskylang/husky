@@ -1,0 +1,5 @@
+-scrpt math
+
+cs:outl('must be: 8 and 9')
+
+cs:outl(math:pow(2, 3), ' and ', math:pow(3, 2))
