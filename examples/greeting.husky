@@ -1,0 +1,6 @@
+-scrpt greeting
+
+cs:out('Your name is ')
+name <- cs:inl()
+
+cs:outl('Hello ', name, '!')

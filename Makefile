@@ -12,7 +12,6 @@ all:
 test:
 	mkdir -p bin_dev
 	touch /tmp/huskylang_test_asdfasdf_31221
-	make
 	g++ --std c++11 -g $(TEST_FILES) -o bin_dev/test
 	./bin_dev/test
 
