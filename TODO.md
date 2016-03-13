@@ -34,7 +34,7 @@
 
 * better error checking system
 
-* move error method to the Parser class +++++++++++++++++________________
+* move error method to the Parser class (implemented)
 
 * split tests into sections (like 'main')
 

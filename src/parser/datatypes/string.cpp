@@ -35,7 +35,7 @@ void String::parse()
             break;
         } else if (this->parser->linei == this->parser->line.length() - 1) {
             // Throwing eol error
-            this->parser->outhandler->error("(string)", "unexpected eol", this->parser->line, this->parser->linen, this->parser->linei);
+            this->parser->error("(string)", "unexpected eol");
 
             return;
         }

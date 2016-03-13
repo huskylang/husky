@@ -39,27 +39,14 @@ void OutputHandler::printchar(char ch)
 }
 
 /*
- * Prints error to console
- *
- * Usage:
- * outputhandler->error("(test section)", "hello error", parser->line, parser->linen, parser->linei);
+ * Prints msg using red color to console
  *
  */
-void OutputHandler::error(const char *sect, std::string msg, std::string line, int il, int ic)
+void OutputHandler::error(std::string msg)
 {
     this->stream = &std::cerr;
 
-    printline("\e[" + red + "m" + "[e] " + sect + " " + msg + "\e[0m");
-
-    this->print("       ");
-    this->printline(line + "  [" + std::to_string(il + 1) + ":" + std::to_string(ic + 1) + "]");
-    this->print("       ");
-
-    for (; ic > 0; ic--) {
-        this->print(" ");
-    }
-
-    this->printline("^");
+    printline("\e[" + red + "m" + msg + "\e[0m");
 
     this->stream = &std::cout;
 }
@@ -69,9 +56,9 @@ void OutputHandler::error(const char *sect, std::string msg, std::string line, i
  * Prints info to console
  *
  */
-void OutputHandler::info(const char *sect, std::string msg)
+void OutputHandler::info(std::string msg)
 {
-    printline("\e[" + blue + "m" + "[i] " + sect + " " + msg + "\e[0m");
+    printline("\e[" + blue + "m" + "[i] " + msg + "\e[0m");
 }
 
 
@@ -79,7 +66,7 @@ void OutputHandler::info(const char *sect, std::string msg)
  * Prints success message to console
  *
  */
-void OutputHandler::success(const char *sect, std::string msg)
+void OutputHandler::success(std::string msg)
 {
-    printline("\e[" + green + "m" + "[s] " + sect + " " + msg + "\e[0m");
+    printline("\e[" + green + "m" + "[s] " + msg + "\e[0m");
 }

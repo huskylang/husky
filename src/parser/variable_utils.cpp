@@ -21,9 +21,8 @@ Variable *Parser::getVar(std::string varname)
         }
     }
 
-    this->outhandler->error(
-        "(variable finder)", "variable '" + varname + "' does not exist",
-        this->line, this->linen, this->linei
+    this->error(
+        "(variable finder)", "variable '" + varname + "' does not exist"
     );
 
     return NULL;

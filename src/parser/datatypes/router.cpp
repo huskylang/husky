@@ -64,7 +64,7 @@ datatypes::AbstractDataType *datatypes::router(Parser *parser, char ch)
     } else if (datatypes::is_numeric(ch)) { // number
         var = new datatypes::Number(parser, 0);
     } else { // error
-        parser->outhandler->error("(datatype indentifyer)", "error when indentifying datatype", parser->line, parser->linen, parser->linei);
+        parser->error("(datatype indentifyer)", "error when indentifying datatype");
         return NULL;
     }
 

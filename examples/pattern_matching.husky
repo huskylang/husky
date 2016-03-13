@@ -5,7 +5,7 @@ name <- 'Michael'
 name <- 'Seva'
 name <- @michael
 
-; See this problems
+; Check this problems
 ; date <- '
 
 another <- @MICHAEL

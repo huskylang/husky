@@ -38,10 +38,7 @@ void Parser::addVariable(datatypes::AbstractDataType *var, std::string name)
 {
     if (this->checkVarname(name)) {
         if (var->getStrValue() != this->getVar(name)->getValue()->getStrValue()) {
-            this->outhandler->error(
-                "(variables manager)", "pattern match failed",
-                this->line, this->linen, this->linei
-            );
+            this->error("(variables manager)", "pattern match failed");
         }
 
         delete var; // deleting variable because we do not need it. we have its copy
@@ -90,7 +87,7 @@ void Parser::parse()
     datatypes::AbstractDataType *var;
 
     std::string varname = "";
-    std::string funname = "";
+    // std::string funname = "";
     std::string line;
 
     // blocks declarations
@@ -117,7 +114,7 @@ void Parser::parse()
         is_varvalue = false;
 
         varname = ""; // null the varname
-        funname = ""; // null the funname
+        // funname = ""; // null the funname
 
         for (this->linei = 0; this->linei < this->line.length(); this->linei++) {
 
@@ -162,7 +159,7 @@ void Parser::parse()
                         // create and add variable
                         var = createVariable(this->line[this->linei]);
 
-                        if (var != NULL) // check if there are some errors
+                        if (var != NULL) // check if there are any errors
                             addVariable(var, varname);
 
                         varname = true;
@@ -173,6 +170,40 @@ void Parser::parse()
             }
         }
     }
+}
+
+
+/*
+ * Prints error to console
+ *
+ * Usage:
+ * parser->error("(test section)", "hello error");
+ *
+ */
+void Parser::error(const char *sect, std::string msg)
+{
+    int i = this->linei;
+
+    this->outhandler->stream = &std::cerr;
+
+    this->outhandler->error(sect + (" " + msg));
+
+    this->outhandler->print("       ");
+    this->outhandler->printline("" \
+        + this->line \
+        + "  [" \
+        + std::to_string(this->linen + 1) + ":" + std::to_string(this->linei + 1) \
+        + "]"
+    );
+    this->outhandler->print("       ");
+
+    for (; i > 0; i--) {
+        this->outhandler->print(" ");
+    }
+
+    this->outhandler->printline("^");
+
+    this->outhandler->stream = &std::cout;
 }
 
 

@@ -1,3 +1,4 @@
+#include <string>
 #include <iostream>
 #include <cstdlib>
 
@@ -52,7 +53,7 @@ bool test_throws_not_enough_args()
         delete new husky::ArgParser(1, argv);
 
         return true;
-    } catch (const char *msg) {
+    } catch (std::string msg) {
         return testStr(msg, "not enough arguments");
     }
 }

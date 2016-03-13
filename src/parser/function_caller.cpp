@@ -15,10 +15,7 @@ using namespace husky;
  */
 void throw_eol_error(Parser *parser)
 {
-    parser->outhandler->error(
-        "(function caller)", "unexpected eol",
-        parser->line, parser->linen, parser->linei
-    );
+    parser->error("(function caller)", "unexpected eol");
 }
 
 /*

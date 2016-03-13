@@ -27,10 +27,9 @@ bool husky::file_modifier::parse(husky::Parser *parser)
         return scrpt_modifier(parser);
     } else {
         // Throw an error
-        parser->outhandler->error(
+        parser->error(
             "(file modifier, parser)", \
-            "unknown modifier '" + modifier + "'", \
-            parser->line, parser->linen, 0
+            "unknown modifier '" + modifier + "'"
         );
 
         return true;
@@ -81,9 +80,8 @@ bool scrpt_modifier(husky::Parser *parser)
         if (parser->line[parser->linei] == '.') { // check if the _filename contains dots
             free(mut);
 
-            parser->outhandler->error(
-                "(file modifier, scrtp)", "specified filename contains dots", \
-                parser->line, parser->linen, parser->linei
+            parser->error(
+                "(file modifier, scrpt)", "specified filename contains dots"
             );
 
             return true;
@@ -106,10 +104,7 @@ bool scrpt_modifier(husky::Parser *parser)
         free(mut);
 
         // throw an error
-        parser->outhandler->error(
-            "(file modifier, scrpt)", "filename dismatch", \
-            parser->line, parser->linen, parser->linei - 1
-        );
+        parser->error("(file modifier, scrpt)", "filename dismatch");
 
         return true;
     }

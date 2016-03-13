@@ -28,6 +28,7 @@ namespace husky {
             bool checkVarname(std::string);
             void parse();
             void clean();
+            void error(const char *, std::string);
             void addVariable(datatypes::AbstractDataType*, std::string);
             datatypes::AbstractDataType *createVariable(char ch);
             Variable *getVar(std::string);

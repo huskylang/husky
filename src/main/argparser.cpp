@@ -8,7 +8,7 @@ using namespace husky;
 ArgParser::ArgParser(int argc, char *argv[])
 {
     if (argc < ARGC) {
-        throw "not enough arguments";
+        throw std::string("not enough arguments");
     } else {
         this->cmdname = argv[0];
         this->filename = argv[1];

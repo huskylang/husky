@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     outhandler = new OutputHandler(&std::cout);
 
 #ifdef VERBOSE_PRINTING
-    outhandler->info("(system)", "loaded output handler");
+    outhandler->info("(system) loaded output handler");
 #endif
 
     try {
@@ -46,19 +46,19 @@ int main(int argc, char *argv[])
         argparser = new ArgParser(argc, argv); // Initilizing argparser
 
 #ifdef VERBOSE_PRINTING
-        outhandler->info("(system)", "parsed args");
+        outhandler->info("(system) parsed args");
 #endif
 
         filehandler = new FileHandler(argparser->getFileName()); // Initializing filehandler
 
 #ifdef VERBOSE_PRINTING
-        outhandler->info("(system)", "loaded file");
+        outhandler->info("(system) loaded file");
 #endif
 
         inhandler = new InputHandler(&std::cin);
 
 #ifdef VERBOSE_PRINTING
-        outhandler->info("(system)", "loaded input handler");
+        outhandler->info("(system) loaded input handler");
 #endif
 
         // create parser
@@ -66,7 +66,7 @@ int main(int argc, char *argv[])
         parser = new Parser(filehandler, outhandler, inhandler, is_end); // is_end is a function
 
 #ifdef VERBOSE_PRINTING
-        outhandler->info("(system)", "loaded parser");
+        outhandler->info("(system) loaded parser");
 #endif
 
         parser->parse();
@@ -83,7 +83,7 @@ int main(int argc, char *argv[])
         delete argparser;
 
 #ifdef VERBOSE_PRINTING
-        outhandler->success("(system)", "ok");
+        outhandler->success("(system) ok");
 #endif
 
         delete outhandler;
@@ -93,7 +93,7 @@ int main(int argc, char *argv[])
     } catch (std::string e) {
         // Catch error and print it
 
-        outhandler->error("(critical)", e, "", 0, 0);
+        outhandler->error("(critical) " + e);
 
         // memory cleanup
 
@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
     } catch (std::exception e) {
         // Catch system errors
 
-        outhandler->error("(critical, system)", e.what(), "", 0, 0);
+        outhandler->error("(critical, system)" + std::string(e.what()));
 
         // memory cleanup
 
