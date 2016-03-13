@@ -8,6 +8,11 @@ __Very early stage of development__
 make
 ```
 
+## Install
+```bash
+sudo make install
+```
+
 ## Run
 ```bash
 ./bin/husky examples/vars.husky

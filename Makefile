@@ -16,6 +16,9 @@ test:
 	g++ --std c++11 -g $(TEST_FILES) -o bin_dev/test
 	./bin_dev/test
 
+install:
+	sudo ln -s $(CURDIR)/bin/husky /usr/bin/husky
+
 wall:
 	mkdir -p bin
 	g++ --std c++11 -g -Wall $(FILES) -o bin/husky
