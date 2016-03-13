@@ -1,3 +1,4 @@
+#include <string>
 #include <iostream>
 #include <fstream>
 
@@ -5,6 +6,8 @@
 #include "inc/test_utils.hpp"
 
 #include "../src/main/inc/inputhandler.hpp"
+
+extern std::string tmp_file_path;
 
 typedef bool(*testcase)(); // testcase type for creation of array of function pointers
 
@@ -23,9 +26,9 @@ bool test_getLine_basic()
 {
     std::cout << "* test getLine basic functionality";
 
-    system("echo 'hello world\nthe best' > tmp/test_inputhandler_tmp");
+    system(("echo 'hello world\nthe best' > " + tmp_file_path).c_str());
 
-    std::ifstream inp("tmp/test_inputhandler_tmp");
+    std::ifstream inp(tmp_file_path);
 
     husky::InputHandler *handler = new husky::InputHandler(&inp);
 
@@ -44,9 +47,9 @@ bool test_getLine_1_ch()
 {
     std::cout << "* test getLine one character functionality";
 
-    system("echo 'h' > tmp/test_inputhandler_tmp");
+    system(("echo 'h' > " + tmp_file_path).c_str());
 
-    std::ifstream inp("tmp/test_inputhandler_tmp");
+    std::ifstream inp(tmp_file_path);
 
     husky::InputHandler *handler = new husky::InputHandler(&inp);
 
@@ -65,9 +68,9 @@ bool test_getLine_1_line()
 {
     std::cout << "* test getLine one line functionality";
 
-    system("echo 'foobarbaz' > tmp/test_inputhandler_tmp");
+    system(("echo 'foobarbaz' > " + tmp_file_path).c_str());
 
-    std::ifstream inp("tmp/test_inputhandler_tmp");
+    std::ifstream inp(tmp_file_path);
 
     husky::InputHandler *handler = new husky::InputHandler(&inp);
 

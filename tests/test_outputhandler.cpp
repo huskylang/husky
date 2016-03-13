@@ -9,6 +9,8 @@
 
 #include "../src/main/inc/outputhandler.hpp"
 
+extern std::string tmp_file_path;
+
 typedef bool(*testcase)(); // testcase type for creation of array of function pointers
 
 /*
@@ -27,8 +29,7 @@ bool test_print_basic()
 
     // writing
 
-    system("touch tmp/test_outputhandler_tmp");
-    std::ofstream outp("tmp/test_outputhandler_tmp");
+    std::ofstream outp(tmp_file_path);
 
     husky::OutputHandler *outputhandler = new husky::OutputHandler(&outp);
     outputhandler->print("foobarbaz quxquzz");
@@ -38,7 +39,7 @@ bool test_print_basic()
 
     // reading
 
-    std::ifstream inp("tmp/test_outputhandler_tmp");
+    std::ifstream inp(tmp_file_path);
 
     std::ostringstream os;
     inp >> os.rdbuf();
@@ -60,8 +61,7 @@ bool test_printline_basic()
 
     // writing
 
-    system("touch tmp/test_outputhandler_tmp");
-    std::ofstream outp("tmp/test_outputhandler_tmp");
+    std::ofstream outp(tmp_file_path);
 
     husky::OutputHandler *outputhandler = new husky::OutputHandler(&outp);
     outputhandler->printline("foobarbaz quxquzz");
@@ -71,7 +71,7 @@ bool test_printline_basic()
 
     // reading
 
-    std::ifstream inp("tmp/test_outputhandler_tmp");
+    std::ifstream inp(tmp_file_path);
 
     std::ostringstream os;
     inp >> os.rdbuf();
@@ -93,8 +93,7 @@ bool test_printchar_basic()
 
     // writing
 
-    system("touch tmp/test_outputhandler_tmp");
-    std::ofstream outp("tmp/test_outputhandler_tmp");
+    std::ofstream outp(tmp_file_path);
 
     husky::OutputHandler *outputhandler = new husky::OutputHandler(&outp);
     outputhandler->printchar('f');
@@ -104,7 +103,7 @@ bool test_printchar_basic()
 
     // reading
 
-    std::ifstream inp("tmp/test_outputhandler_tmp");
+    std::ifstream inp(tmp_file_path);
 
     std::ostringstream os;
     inp >> os.rdbuf();
@@ -126,8 +125,7 @@ bool test_print_printline_printchar_together()
 
     // writing
 
-    system("touch tmp/test_outputhandler_tmp");
-    std::ofstream outp("tmp/test_outputhandler_tmp");
+    std::ofstream outp(tmp_file_path);
 
     husky::OutputHandler *outputhandler = new husky::OutputHandler(&outp);
     outputhandler->printline("hello");
@@ -140,7 +138,7 @@ bool test_print_printline_printchar_together()
 
     // reading
 
-    std::ifstream inp("tmp/test_outputhandler_tmp");
+    std::ifstream inp(tmp_file_path);
 
     std::ostringstream os;
     inp >> os.rdbuf();

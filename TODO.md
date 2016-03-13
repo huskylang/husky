@@ -26,18 +26,10 @@
 
 * throwing errors in absdatatype when trying to call wrong value getter
 
-* make function call with code:fcall()
-
 * create function datatype
-
-* implement a website
 
 * better error checking system
 
-* move error method to the Parser class (implemented)
-
 * split tests into sections (like 'main')
-
-* remove tmp folder and use /tmp/ folder
 
 * create a module list in parser +++++++++++++++++

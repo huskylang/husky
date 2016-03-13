@@ -7,6 +7,8 @@
 
 #include "../src/main/inc/filehandler.hpp"
 
+extern std::string tmp_file_path;
+
 typedef bool(*testcase)(); // testacse type for creation of array of function pointers
 
 /*
@@ -23,9 +25,9 @@ bool test_filehandler_getLine_basic()
 {
     std::cout << "* testing getLine method for basic functionality";
 
-    system("echo 'foo bar\nbar baz\nbaz qux' > tmp/test_filehandler_tmp");
+    system(("echo 'foo bar\nbar baz\nbaz qux' > " + tmp_file_path).c_str());
 
-    husky::FileHandler *filehandler = new husky::FileHandler("tmp/test_filehandler_tmp");
+    husky::FileHandler *filehandler = new husky::FileHandler(tmp_file_path);
 
     bool retval = testStr(filehandler->getLine(), "foo bar");
 
@@ -42,9 +44,9 @@ bool test_getChar_basic()
 {
     std::cout << "* testing getChar method for basic functionality";
 
-    system("echo 'foo bar\nbar baz\nbaz qux' > tmp/test_filehandler_tmp");
+    system(("echo 'foo bar\nbar baz\nbaz qux' > " + tmp_file_path).c_str());
 
-    husky::FileHandler *filehandler = new husky::FileHandler("tmp/test_filehandler_tmp");
+    husky::FileHandler *filehandler = new husky::FileHandler(tmp_file_path);
 
     bool retval = testChar(filehandler->getChar(), 'f');
 
@@ -61,9 +63,9 @@ bool test_eof_empty()
 {
     std::cout << "* testing eof method of an empty file";
 
-    system("rm -f tmp/test_filehandler_tmp && touch tmp/test_filehandler_tmp");
+    system(("rm -f " + tmp_file_path + " && touch " + tmp_file_path).c_str());
 
-    husky::FileHandler *filehandler = new husky::FileHandler("tmp/test_filehandler_tmp");
+    husky::FileHandler *filehandler = new husky::FileHandler(tmp_file_path);
 
     filehandler->getLine();
 
@@ -82,9 +84,9 @@ bool test_eof_not_eof()
 {
     std::cout << "* testing eof method when it is not eof";
 
-    system("echo 'foobar' > tmp/test_filehandler_tmp");
+    system(("echo 'foobar' > " + tmp_file_path).c_str());
 
-    husky::FileHandler *filehandler = new husky::FileHandler("tmp/test_filehandler_tmp");
+    husky::FileHandler *filehandler = new husky::FileHandler(tmp_file_path);
 
     bool retval = testBool(filehandler->eof(), false);
 
@@ -101,9 +103,9 @@ bool test_eof_is_eof()
 {
     std::cout << "* testing eof method when it is eof";
 
-    system("echo 'foobar' > tmp/test_filehandler_tmp");
+    system(("echo 'foobar' > " + tmp_file_path).c_str());
 
-    husky::FileHandler *filehandler = new husky::FileHandler("tmp/test_filehandler_tmp");
+    husky::FileHandler *filehandler = new husky::FileHandler(tmp_file_path);
 
     filehandler->getLine();
     filehandler->getLine();
@@ -123,12 +125,12 @@ bool test_throws_file_not_found_error()
 {
     std::cout << "* testing if constructor throws 'file not found' error";
 
-    system("rm -f tmp/not_found_file");
+    system("rm -f tmp/not_found_file_asdfasdf_322112");
 
     try {
-        delete new husky::FileHandler("tmp/not_found_file");
+        delete new husky::FileHandler("tmp/not_found_file_asdfasdf_322112");
     } catch (std::string msg) {
-        return testStr(msg, "file: 'tmp/not_found_file' not found");
+        return testStr(msg, "file: 'tmp/not_found_file_asdfasdf_322112' not found");
     }
 }
 

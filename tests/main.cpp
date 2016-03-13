@@ -5,6 +5,14 @@
 #include "inc/test_outputhandler.hpp"
 #include "inc/test_filehandler.hpp"
 
+/*
+ * Path to the tmp_file
+ */
+//
+std::string tmp_file_path = "/tmp/huskylang_test_asdfasdf_31221";
+//
+
+
 typedef bool(*testpack)(); // testpack type for creation of array of function pointers
 
 int main()
@@ -24,7 +32,8 @@ int main()
 
     //
 
-    std::cout << "Testing Husky Programming Language" << std::endl << std::endl;
+    std::cout << "Testing Husky Programming Language" << std::endl \
+              << "==================================" << std::endl << std::endl;
 
     for (len--; len >= 0; len--) {
         if ((*funlist[len])()) failed = true;
