@@ -10,3 +10,5 @@ name <- 'hello'
 surname <- 'hi'
 
 name1 <- name
+
+cs:outl('All is okay. It is working')

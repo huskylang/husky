@@ -18,7 +18,6 @@ namespace husky { namespace datatypes {
 
             virtual AbstractDataType *copy();
             virtual std::string getStrValue();
-            virtual void cleanup();
             virtual void parse();
     };
 

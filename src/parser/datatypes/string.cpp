@@ -45,11 +45,6 @@ void String::parse()
 }
 
 
-void String::cleanup()
-{
-    //
-}
-
 /**
  ** Getters
  **

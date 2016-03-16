@@ -3,7 +3,17 @@
 #include <iostream>
 #include <fstream>
 
+#include "../src/main/inc/filehandler.hpp"
+#include "../src/main/inc/outputhandler.hpp"
+#include "../src/main/inc/inputhandler.hpp"
+
+#include "../src/parser/inc/parser.hpp"
+
 #include "inc/test_utils.hpp"
+
+extern std::string tmp_file_path;
+
+using namespace husky;
 
 bool testOutput(std::string script, std::string out_to_see)
 {
@@ -101,4 +111,56 @@ bool testInt(long long int result, long long int to_see)
     std::cout << result << " != " << to_see;
 
     return true;
+}
+
+
+/**
+ * and some helper tools
+ *
+ */
+
+/*
+ * This is an is_end function which always returns true
+ *
+ */
+bool empty_is_end(char)
+{
+    return true;
+}
+
+
+FileHandler *create_filehandler()
+{
+    return new FileHandler(tmp_file_path.c_str());
+}
+
+InputHandler *create_inhandler()
+{
+    std::ifstream inp((tmp_file_path + "_1").c_str());
+
+    return new InputHandler(&inp);
+}
+
+OutputHandler *create_outhandler()
+{
+    std::ofstream outp((tmp_file_path + "_2").c_str());
+
+    return new OutputHandler(&outp);
+}
+
+Parser *create_parser(bool (*is_end)(char))
+{
+    return new Parser(
+        create_filehandler(), create_outhandler(), create_inhandler(), is_end
+    );
+}
+
+void cleanup_parser(Parser *parser)
+{
+    delete parser->filehandler;
+    delete parser->outhandler;
+    delete parser->inhandler;
+
+    parser->clean();
+    delete parser;
 }

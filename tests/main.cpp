@@ -5,6 +5,9 @@
 #include "inc/test_outputhandler.hpp"
 #include "inc/test_filehandler.hpp"
 
+#include "datatypes/inc/test_string.hpp"
+#include "datatypes/inc/test_atom.hpp"
+
 /*
  * Path to the tmp_file
  */
@@ -19,7 +22,9 @@ int main()
 {
     bool failed = false;
 
-    int len = 4; // add one for your test
+    int i;
+
+    int len = 6; // add one for your test
 
     testpack *funlist = (testpack*) malloc(len * sizeof(testpack));
 
@@ -29,14 +34,16 @@ int main()
     funlist[1] = test_argparser;
     funlist[2] = test_outputhandler;
     funlist[3] = test_filehandler;
+    funlist[4] = test_string_datatype;
+    funlist[5] = test_atom_datatype;
 
     //
 
     std::cout << "Testing Husky Programming Language" << std::endl \
               << "==================================" << std::endl << std::endl;
 
-    for (len--; len >= 0; len--) {
-        if ((*funlist[len])()) failed = true;
+    for (i = 0; i < len; i++) {
+        if ((*funlist[i])()) failed = true;
         std::cout << std::endl;
     }
 

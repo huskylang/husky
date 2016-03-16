@@ -2,7 +2,7 @@
 
 * do strings automatically parse escape characters like '\n' or '\\' or '\''
 
-* pattern matching like "@good <- cs:outl('Hello')" (bug)
+* pattern matching like "@good <- cs:outl('Hello')" (bug) ++++++++++++
 
 * All types are anonymous. You assign a function to variable --
 
@@ -33,3 +33,11 @@
 * split tests into sections (like 'main')
 
 * create a module list in parser +++++++++++++++++
+
+* add name attribute to all datatypes
+
+* make tests use namespaces
+
+* create console interpreter
+
+* create syntax highlighting grammar
