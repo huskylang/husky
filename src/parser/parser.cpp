@@ -18,10 +18,10 @@
 
 #include "inc/parser.hpp"
 
+using namespace husky;
+
 int modules_len;
 lib::Module **modules;
-
-using namespace husky;
 
 /*
  * bool (*)(char) is a function pointer

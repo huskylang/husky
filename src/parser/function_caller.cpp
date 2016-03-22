@@ -11,10 +11,10 @@
 #include "../stdlib/inc/module.hpp"
 #include "../stdlib/inc/stdlib.hpp"
 
+using namespace husky;
+
 extern int modules_len;
 extern lib::Module **modules;
-
-using namespace husky;
 
 /*
  * Throws eol error
