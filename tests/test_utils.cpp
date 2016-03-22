@@ -31,7 +31,7 @@ bool testOutput(std::string script, std::string out_to_see)
     out = buffer.str();
 
     if (out == out_to_see) {
-        std::cout << "ok" << std::endl << std::endl;
+        std::cout << "  ok" << std::endl << std::endl;
     }
 
     std::cout << "'" << std::endl << out << std::endl << "'" << std::endl;
@@ -50,7 +50,7 @@ bool testStr(std::string result, std::string to_see)
     std::cout << std::endl;
 
     if (result == to_see) {
-        std::cout << "ok" << std::endl;
+        std::cout << "  ok" << std::endl;
         return false;
     }
 
@@ -68,7 +68,7 @@ bool testChar(char ch, const char ch_to_see)
     std::cout << std::endl;
 
     if (ch == ch_to_see) {
-        std::cout << "ok" << std::endl;
+        std::cout << "  ok" << std::endl;
         return false;
     }
 
@@ -86,7 +86,7 @@ bool testBool(bool result, bool to_see)
     std::cout << std::endl;
 
     if (result == to_see) {
-        std::cout << "ok" << std::endl;
+        std::cout << "  ok" << std::endl;
         return false;
     }
 
@@ -104,7 +104,7 @@ bool testInt(long long int result, long long int to_see)
     std::cout << std::endl;
 
     if (result == to_see) {
-        std::cout << "ok" << std::endl;
+        std::cout << "  ok" << std::endl;
         return false;
     }
 
@@ -162,5 +162,6 @@ void cleanup_parser(Parser *parser)
     delete parser->inhandler;
 
     parser->clean();
+
     delete parser;
 }

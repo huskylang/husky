@@ -56,6 +56,7 @@ bool test_atom_copy_basic()
 
     atom->clean();
     atom_copy->clean();
+    
     delete atom_copy;
     delete atom;
 

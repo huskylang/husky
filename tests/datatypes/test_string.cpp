@@ -14,7 +14,7 @@ using namespace husky;
 
 extern std::string tmp_file_path;
 
-typedef bool(*testcase)(); // testacse type for creation of array of function pointers
+typedef bool(*testcase)(); // testcase type for creation of array of function pointers
 
 /*
  * Test getStrValue method for basic functionality
