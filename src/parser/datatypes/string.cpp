@@ -38,6 +38,33 @@ void String::parse()
             this->parser->error("(string)", "unexpected eol");
 
             return;
+        } else if (ch == '\\') {
+            ch = this->parser->line[++this->parser->linei];
+
+            switch (ch) {
+                case '\'':
+                    ch = '\'';
+                    break;
+                case 't':
+                    ch = '\t';
+                    break;
+                case 'n':
+                    ch = '\n';
+                    break;
+                case 'r':
+                    ch = '\r';
+                    break;
+                case 'v':
+                    ch = '\v';
+                    break;
+                case '\\':
+                    ch = '\\';
+                    break;
+                default:
+                    this->parser->error("(string)", std::string("'\\") + ch + "' is not known escape character");
+                    ch = '\\';
+                    this->parser->linei--;
+            }
         }
 
         this->value += ch;

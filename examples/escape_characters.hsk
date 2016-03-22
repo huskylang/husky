@@ -1,0 +1,14 @@
+-scrpt escape_characters
+
+cs:out('\n\tHello\n')
+cs:out('\n')
+
+cs:outl('I\'m husky\n')
+
+cs:outl('What is you name?')
+cs:out(' - ')
+
+name <- cs:inl()
+cs:outl('\n')
+
+cs:outl('Goodbye,\n', name)

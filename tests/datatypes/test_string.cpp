@@ -1,5 +1,6 @@
 #include <string>
 #include <iostream>
+#include <fstream>
 #include <cstdlib>
 
 #include "../../src/parser/inc/parser.hpp"
@@ -96,19 +97,55 @@ bool test_string_parse_with_add_val()
 }
 
 /*
+ * Tests string escape characters
+ *
+ */
+bool test_string_escape_characters()
+{
+    std::cout << "* testing escape characters";
+
+    std::ofstream tmp_file (tmp_file_path.c_str());
+
+    tmp_file << "\\\\foo\\tbar\\n\\vpart\\''";
+
+    tmp_file.close();
+
+    Parser *parser = create_parser(empty_is_end);
+
+    parser->line = parser->filehandler->getLine();
+
+    parser->linei = 0;
+    parser->linen = 0;
+
+    datatypes::String *str = new datatypes::String(parser, "");
+
+    str->parse();
+
+    bool retval = testStr(str->getStrValue(), "\\foo\tbar\n\vpart\'");
+
+    str->clean();
+    delete str;
+
+    cleanup_parser(parser);
+
+    return retval;
+}
+
+/*
  *
  *
  */
 bool test_string_datatype()
 {
     bool failed = false;
-    int len = 3;
+    int len = 4;
 
     testcase *funlist = (testcase*) malloc(len * sizeof(testcase));
 
     funlist[0] = test_string_getStrValue_basic;
     funlist[1] = test_string_copy_basic;
     funlist[2] = test_string_parse_with_add_val;
+    funlist[3] = test_string_escape_characters;
 
     std::cout << "| testing string datatype" << std::endl;
 
