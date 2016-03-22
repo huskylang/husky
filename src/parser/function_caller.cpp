@@ -1,11 +1,18 @@
 #include <string>
 
 #include "inc/parser.hpp"
+
 #include "datatypes/inc/abstract.hpp"
+#include "datatypes/inc/atom.hpp"
 
 #include "inc/function_caller.hpp"
 
-#include "../stdlib/inc/router.hpp"
+#include "../stdlib/inc/module_function.hpp"
+#include "../stdlib/inc/module.hpp"
+#include "../stdlib/inc/stdlib.hpp"
+
+extern int modules_len;
+extern lib::Module **modules;
 
 using namespace husky;
 
@@ -18,8 +25,58 @@ void throw_eol_error(Parser *parser)
     parser->error("(function caller)", "unexpected eol");
 }
 
+
 /*
- * Parses function call like '(cs:out 'hello')'
+ * Runs module function
+ *
+ */
+datatypes::AbstractDataType *run_module(Parser *parser, std::string funname, datatypes::AbstractDataType **arglist, int len)
+{
+    int i;
+    lib::Module *module = NULL;
+    lib::ModFunction *function = NULL;
+
+    // parser modname and funname from full funname
+
+    std::size_t pos = funname.find(":");
+
+    std::string modname = funname.substr(0, pos);
+
+    funname = funname.substr(pos + 1);
+
+    // find module
+
+    for (i = 0; i < modules_len; i++) {
+        if (modname == modules[i]->getName()) {
+            module = modules[i];
+            break;
+        }
+    }
+
+    if (module) {
+        // find function
+
+        for (i = 0; i < module->getFunsLen(); i++) {
+            if(funname == module->getFuns()[i]->getName()) {
+                function = module->getFuns()[i];
+                break;
+            }
+        }
+
+        if (function) {
+            return function->run(parser, arglist, len);
+        } else {
+            parser->error("(module manager)", "in module '" + modname + "' there is no function '" + funname + "'");
+            return new datatypes::Atom(parser, "bad");
+        }
+    } else {
+        parser->error("(module manager)", "there is no module named '" + modname + "'");
+        return new datatypes::Atom(parser, "bad");
+    }
+}
+
+/*
+ * Parses function call like 'cs:out('hello')'
  *
  */
 datatypes::AbstractDataType *function_caller::call(Parser *parser, std::string funname)
@@ -88,7 +145,8 @@ datatypes::AbstractDataType *function_caller::call(Parser *parser, std::string f
         parser->linei++;
     }
 
-    retval = stdlib::run(parser, funname, arglist, len); // run function
+    retval = run_module(parser, funname, arglist, len); // run function
+    // retval = stdlib::run(parser, funname, arglist, len); // run function
 
     // parser->outhandler->printline("funname: " + funname);
 

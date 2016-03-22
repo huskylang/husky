@@ -1,4 +1,5 @@
 #include <string>
+#include <cstdlib>
 
 #include "datatypes/inc/abstract.hpp"
 #include "inc/variable.hpp"
@@ -12,7 +13,13 @@
 #include "inc/file_modifier.hpp"
 #include "inc/function_caller.hpp"
 
+#include "../stdlib/inc/module.hpp"
+#include "../stdlib/inc/stdlib.hpp"
+
 #include "inc/parser.hpp"
+
+int modules_len;
+lib::Module **modules;
 
 using namespace husky;
 
@@ -28,13 +35,18 @@ Parser::Parser(FileHandler *filehandler, OutputHandler *outhandler, InputHandler
     this->inhandler = inhandler;
 
     this->is_end = is_end;
+
+    modules_len = stdlib::modlist_len();
+
+    // this->modules = malloc(sizeof(lib::Module) * this->modules_len);
+    modules = stdlib::modlist();
 }
 
 /*
  * Adds a variable to the scope
  *
  */
-void Parser::addVariable(datatypes::AbstractDataType *var, std::string name)
+bool Parser::addVariable(datatypes::AbstractDataType *var, std::string name, bool is_custom)
 {
     if (this->checkVarname(name)) {
         if (var->getStrValue() != this->getVar(name)->getValue()->getStrValue()) {
@@ -160,7 +172,7 @@ void Parser::parse()
                         var = createVariable(this->line[this->linei]);
 
                         if (var != NULL) // check if there are any errors
-                            addVariable(var, varname);
+                            addVariable(var, varname, true);
 
                         varname = true;
                         is_varvalue = false;
@@ -213,6 +225,8 @@ void Parser::error(const char *sect, std::string msg)
  */
 void Parser::clean()
 {
+    int funs_len;
+
     for (this->variables_len--; this->variables_len >= 0; this->variables_len--) {
 #ifdef VERBOSE_PRINTING
         this->outhandler->print(this->variables[this->variables_len]->getName()); // printing name
@@ -223,4 +237,18 @@ void Parser::clean()
         delete this->variables[this->variables_len]->getValue(); // var cleanup
         delete this->variables[this->variables_len]; // delete
     }
+
+    for (modules_len--; modules_len >= 0; modules_len--) {
+        funs_len = modules[modules_len]->getFunsLen();
+
+        for (funs_len--; funs_len >= 0; funs_len--) {
+            delete modules[modules_len]->getFuns()[funs_len];
+        }
+
+        free(modules[modules_len]->getFuns());
+
+        delete modules[modules_len];
+    }
+
+    free(modules);
 }

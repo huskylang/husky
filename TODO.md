@@ -41,3 +41,10 @@
 * create console interpreter
 
 * create syntax highlighting grammar
+
+* make imports as
+        -imp
+            cs
+            math
+
+* namespace 'lib' must be 'husky::lib'

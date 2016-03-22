@@ -8,6 +8,8 @@
 #include "../../main/inc/inputhandler.hpp"
 #include "../../main/inc/filehandler.hpp"
 
+// #include "../../stdlib/inc/module.hpp"
+
 namespace husky {
 
     /*
@@ -19,17 +21,16 @@ namespace husky {
         private:
             bool (*is_end)(char); // function to check if need to stop parsing
 
-            // passports::AbstractPassport *datatypes_supported[1];
-            //
-            // int datatypes_supported_len = 1;
-
         public:
             Parser(FileHandler*, OutputHandler*, InputHandler*, bool (*)(char)); // bool (*)(char) is function pointer
+
             bool checkVarname(std::string);
+            bool addVariable(datatypes::AbstractDataType*, std::string, bool);
+
             void parse();
             void clean();
             void error(const char *, std::string);
-            void addVariable(datatypes::AbstractDataType*, std::string);
+
             datatypes::AbstractDataType *createVariable(char ch);
             Variable *getVar(std::string);
 
@@ -44,6 +45,9 @@ namespace husky {
 
             Variable *variables[20]; // array of variables in this scope
             int variables_len = 0;
+
+            // lib::Module **modules; // array of modules in this scope
+            // int modules_len;
     };
 
 }

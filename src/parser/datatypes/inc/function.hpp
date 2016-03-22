@@ -8,17 +8,10 @@ namespace husky::parser::datatypes {
         private:
             husky::parser::Parser *parser;
 
-            AbstractDataType *variables[20];
-            int variables_len = 0;
-
-            std::string name;
-
         public:
-            Function(husky::parser::Parser*, std::string);
+            Function(husky::parser::Parser*);
 
-            virtual std::string getName();
-
-            int run(AbstractDataType**);
+            virtual AbstractDataType *run(AbstractDataType**);
     };
 
 }

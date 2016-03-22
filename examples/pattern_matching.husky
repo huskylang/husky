@@ -7,12 +7,15 @@ name <- @michael
 
 ; Check this problems
 ; date <- '
+; @good <- @cs:outl()
 
 another <- @MICHAEL
 
 msg <- @hello
-msg <- @hello
+msg <- name
 msg <- @hi
+
+; cs:outl() <- @bad
 
 cs:outl('msg = ', msg)
 cs:outl('name = ', name)
