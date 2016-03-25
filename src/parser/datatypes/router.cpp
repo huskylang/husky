@@ -14,6 +14,7 @@
 
 using namespace husky;
 
+std::string varname = "";
 
 /*
  * Checks if this character is supported in variables and function calls
@@ -21,7 +22,8 @@ using namespace husky;
  */
 bool is_var_function_call(char ch)
 {
-    return (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || (ch == ':');
+    //      big alpha                 small alpa
+    return (ch >= 65 && ch <= 90) || (ch >= 97 && ch <= 122) || (ch == ':') || (ch == '_');
 }
 
 
@@ -29,18 +31,26 @@ bool is_var_function_call(char ch)
  * Identifies datatype and returns a ready variable
  *
  */
-datatypes::AbstractDataType *datatypes::router(Parser *parser, char ch)
+datatypes::AbstractDataType *datatypes::router(Parser *parser, char ch, bool throw_error)
 {
-    // variable pointer
+    // variables pointers
+    Variable *varhold;
     datatypes::AbstractDataType *var = NULL;
 
-    std::string varname = "";
+    varname = "";
 
     // indentifying datatype
 
     if (is_var_function_call(ch)) { // is function_call or a variable
         // read varname
-        for (; parser->linei < parser->line.length() && (is_var_function_call(parser->line[parser->linei]) || datatypes::is_numeric(parser->line[parser->linei])); parser->linei++)
+        for (;
+            parser->linei < parser->line.length()
+                && (
+                    is_var_function_call(parser->line[parser->linei])
+                    || datatypes::is_numeric(parser->line[parser->linei])
+                );
+            parser->linei++
+        )
         {
             varname += parser->line[parser->linei];
         }
@@ -49,8 +59,14 @@ datatypes::AbstractDataType *datatypes::router(Parser *parser, char ch)
             parser->linei++;
             var = function_caller::call(parser, varname);
         } else { // it is a variable
+            varhold = parser->getVar(varname, throw_error);
+
             parser->linei--;
-            var = parser->getVar(varname)->getValue()->copy();
+
+            if (!varhold && throw_error)
+                var = new datatypes::String(parser, "");
+            else if (varhold)
+                var = varhold->getValue()->copy();
         }
 
         return var;
@@ -65,7 +81,7 @@ datatypes::AbstractDataType *datatypes::router(Parser *parser, char ch)
         var = new datatypes::Number(parser, 0);
     } else { // error
         parser->error("(datatype indentifyer)", "error when indentifying datatype");
-        return NULL;
+        return new datatypes::String(parser, "");
     }
 
     var->parse();

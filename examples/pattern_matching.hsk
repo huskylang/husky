@@ -5,9 +5,14 @@ name <- 'Michael'
 name <- 'Seva'
 name <- @michael
 
+'Michaels' <- name
+
 ; Check this problems
 ; date <- '
-; @good <- @cs:outl()
+
+@good <- cs:outl()
+
+@yes <- @yes
 
 another <- @MICHAEL
 
@@ -15,8 +20,10 @@ msg <- @hello
 msg <- name
 msg <- @hi
 
-; cs:outl() <- @bad
+cs:outl() <- @good
 
 cs:outl('msg = ', msg)
 cs:outl('name = ', name)
 cs:outl('another = ', another)
+
+@good

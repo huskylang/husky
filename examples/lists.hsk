@@ -1,0 +1,5 @@
+-scrpt lists
+
+list <- [1, 2, 3, 4, 5]
+
+cs:out([1, 2, 3])

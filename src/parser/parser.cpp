@@ -20,6 +20,8 @@
 
 using namespace husky;
 
+extern std::string varname;
+
 int modules_len;
 lib::Module **modules;
 
@@ -36,28 +38,62 @@ Parser::Parser(FileHandler *filehandler, OutputHandler *outhandler, InputHandler
 
     this->is_end = is_end;
 
-    modules_len = stdlib::modlist_len();
-
     // this->modules = malloc(sizeof(lib::Module) * this->modules_len);
+
     modules = stdlib::modlist();
+    modules_len = stdlib::modlist_len();
+}
+
+/*
+ *
+ *
+ */
+inline void Parser::skipSpaces()
+{
+    for (;
+        this->linei < this->line.length() && this->line[this->linei] == ' ';
+        this->linei++
+    );
+}
+
+/*
+ * Checks two variables for equality
+ *
+ */
+bool Parser::patternMatch(
+    datatypes::AbstractDataType *var1, datatypes::AbstractDataType *var2, bool throw_error
+)
+{
+    if (var1->getStrValue() != var2->getStrValue()) {
+        if (throw_error)
+            this->error("(variables manager)", "pattern match failed");
+
+        return false;
+    }
+
+    return true;
 }
 
 /*
  * Adds a variable to the scope
  *
  */
-bool Parser::addVariable(datatypes::AbstractDataType *var, std::string name, bool is_custom)
+bool Parser::addVariable(datatypes::AbstractDataType *var, std::string name, bool throw_error)
 {
-    if (this->checkVarname(name)) {
-        if (var->getStrValue() != this->getVar(name)->getValue()->getStrValue()) {
-            this->error("(variables manager)", "pattern match failed");
-        }
+    bool retval = true;
+
+    if (name[0] == '_') {
+        //
+    } else if (this->checkVarname(name)) {
+        retval = this->patternMatch(var, this->getVar(name, true)->getValue(), throw_error);
 
         delete var; // deleting variable because we do not need it. we have its copy
     } else {
         // add variable and increment length
         this->variables[this->variables_len++] = new Variable(var, name);
     }
+
+    return retval;
 }
 
 /*
@@ -84,9 +120,9 @@ bool Parser::checkVarname(std::string name)
  * Creates a variable
  *
  */
-datatypes::AbstractDataType *Parser::createVariable(char ch)
+datatypes::AbstractDataType *Parser::createVariable(char ch, bool throw_error)
 {
-    return datatypes::router(this, ch);
+    return datatypes::router(this, ch, throw_error);
 }
 
 /*
@@ -95,17 +131,13 @@ datatypes::AbstractDataType *Parser::createVariable(char ch)
  */
 void Parser::parse()
 {
-
     datatypes::AbstractDataType *var;
+    datatypes::AbstractDataType *var1;
 
-    std::string varname = "";
-    // std::string funname = "";
-    std::string line;
+    std::string varname_dump;
 
     // blocks declarations
-    bool is_comment;
-    bool is_varname;
-    bool is_varvalue;
+    bool is_leftside;
     bool is_error = false;
 
     // parse content
@@ -121,64 +153,61 @@ void Parser::parse()
             break;
         }
 
-        is_comment = false;
-        is_varname = true;
-        is_varvalue = false;
+        is_leftside = true;
+        this->linei = 0;
 
-        varname = ""; // null the varname
-        // funname = ""; // null the funname
+        var = NULL;
 
-        for (this->linei = 0; this->linei < this->line.length(); this->linei++) {
+        this->skipSpaces();
 
-            // check if eof or end character
-            if (is_end(this->line[this->linei])) {
-                break;
+        this->linestart = this->linei;
+
+        if (this->line[this->linei] == '-') { // file modifier
+           // Parse file modifier
+           this->linei++; // skip '-' character
+           this->linestart = this->linei;
+
+           is_error = file_modifier::parse(this); // set the criticall error to true
+        } else {
+            for (; this->linei < this->line.length(); this->linei++) {
+
+                // check if eof or end character
+                if (is_end(this->line[this->linei])) {
+                    break;
+                } else if (this->line[this->linei] == ';') {
+                    break;
+                } else if (
+                    this->line[this->linei] == '<'
+                    && this->line[this->linei + 1] == '-'
+                    && is_leftside
+                ) {
+                    // go to the value block
+                    is_leftside = false;
+                    this->linei += 2;
+                } else if (is_leftside && this->line[this->linei] != ' ') {
+                    var = this->createVariable(this->line[this->linei], false);
+
+                    // this->linei++;
+                    this->skipSpaces();
+                } else if (this->line[this->linei] != ' ') {
+                    if (!var) {
+                        varname_dump = varname;
+                        var = this->createVariable(this->line[this->linei], true);
+
+                        this->addVariable(var, varname_dump, true);
+                    } else {
+                        var1 = this->createVariable(this->line[this->linei], true);
+
+                        this->patternMatch(var, var1, true);
+                        
+                        delete var;
+                        delete var1;
+                    }
+                }
             }
 
-            if (is_comment) {
-                if (this->line[this->linei] == '\n') {
-                    // go to the next line
-                    is_comment = false;
-
-                    is_varname = true;
-                    is_varvalue = false;
-                }
-            } else {
-                if (this->line[this->linei] == ';') {
-                    // turn on comment block
-                    is_comment = true;
-                    varname = ""; // null the varname
-                } else if (this->line[this->linei] == '<' && this->line[this->linei + 1] == '-') {
-                    this->linei++; // skip '-' character
-                    // go to the value block
-                    is_varname = false;
-                    is_varvalue = true;
-                } else if (this->line[this->linei] == '(') {
-                    this->linei++; // skip '(' character
-                    var = function_caller::call(this, varname);
-
-                    if (!is_varvalue) { // if function retval is not used
-                        delete var; // deleting var
-                    }
-                } else if (this->line[this->linei] == '-') {
-                    // Parse file modifier
-                    this->linei++; // skip '-' character
-                    is_error = file_modifier::parse(this); // set the criticall error to true
-                } else if (this->line[this->linei] != ' ') {
-                    if (is_varname) {
-                        varname += this->line[this->linei]; // add character to varname
-                    } else if (is_varvalue) {
-                        // create and add variable
-                        var = createVariable(this->line[this->linei]);
-
-                        if (var != NULL) // check if there are any errors
-                            addVariable(var, varname, true);
-
-                        varname = true;
-                        is_varvalue = false;
-                        varname = ""; // null the varname
-                    }
-                }
+            if (is_leftside && var) {
+                delete var;
             }
         }
     }

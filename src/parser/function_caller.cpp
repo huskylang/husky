@@ -4,6 +4,7 @@
 
 #include "datatypes/inc/abstract.hpp"
 #include "datatypes/inc/atom.hpp"
+#include "datatypes/inc/string.hpp"
 
 #include "inc/function_caller.hpp"
 
@@ -87,30 +88,6 @@ datatypes::AbstractDataType *function_caller::call(Parser *parser, std::string f
 
     datatypes::AbstractDataType **arglist;
 
-
-    // // skip all spaces before funname
-    //
-    // while (parser->line[parser->linei] == ' ' || parser->line[parser->linei] == '\n') {
-    //     if (parser->linei >= parser->line.length()) {
-    //         throw_eol_error(parser);
-    //         return retval;
-    //     }
-    //
-    //     parser->linei++;
-    // }
-    //
-    // // parse funname up to the first space
-    //
-    // while (parser->line[parser->linei] != ' ') {
-    //     if (parser->linei >= parser->line.length()) {
-    //         throw_eol_error(parser);
-    //         return retval;
-    //     }
-    //
-    //     funname += parser->line[parser->linei];
-    //     parser->linei++;
-    // }
-
     // initialize a list of arguments
 
     arglist = (datatypes::AbstractDataType **) malloc(
@@ -140,15 +117,14 @@ datatypes::AbstractDataType *function_caller::call(Parser *parser, std::string f
             parser->linei++;
         }
 
-        arglist[len - 1] = parser->createVariable(parser->line[parser->linei]); // append to the list of arguments
+        retval = parser->createVariable(parser->line[parser->linei], true); // append to the list of arguments
+
+        arglist[len - 1] = retval;
 
         parser->linei++;
     }
 
     retval = run_module(parser, funname, arglist, len); // run function
-    // retval = stdlib::run(parser, funname, arglist, len); // run function
-
-    // parser->outhandler->printline("funname: " + funname);
 
     for (len--; len >= 0; len--) {
         // parser->outhandler->printline("arg: " + arglist[len]->getStrValue());

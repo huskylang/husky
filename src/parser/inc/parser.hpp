@@ -27,17 +27,23 @@ namespace husky {
             bool checkVarname(std::string);
             bool addVariable(datatypes::AbstractDataType*, std::string, bool);
 
+            bool patternMatch(datatypes::AbstractDataType *, datatypes::AbstractDataType *, bool);
+
+            inline void skipSpaces();
+
             void parse();
             void clean();
             void error(const char *, std::string);
 
-            datatypes::AbstractDataType *createVariable(char ch);
-            Variable *getVar(std::string);
+            datatypes::AbstractDataType *createVariable(char, bool);
+            Variable *getVar(std::string, bool);
 
             // variables
 
             std::string line;
             int linen, linei; // used to indicate line number and line index
+
+            int linestart;
 
             OutputHandler *outhandler;
             FileHandler *filehandler;

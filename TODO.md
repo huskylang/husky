@@ -1,8 +1,6 @@
 # TODO:
 
-* pattern matching like "@good <- cs:outl('Hello')" (bug) ++++++++++++
-
-* All types are anonymous. You assign a function to variable --
+* All types are anonymous. You assign a function to variable ---
 
 * strings as lists strategy
 
@@ -11,6 +9,8 @@
 * boolean types 'yes' and 'no'
 
 * status words are 'good' and 'bad'
+
+* null pointer is @nil
 
 * atoms with @ (examples: @good @bad @yes @no) (implemented but not tested)
 
@@ -26,9 +26,9 @@
 
 * better error checking system
 
-* create a module list in parser +++++++++++++++++
+* create a module list in parser ---
 
-* add name attribute to all datatypes
+* add name of type attribute to all datatypes ++++++
 
 * make tests use namespaces
 
@@ -40,5 +40,3 @@
         -imp
             cs
             math
-
-* namespace 'lib' must be 'husky::lib'

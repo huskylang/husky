@@ -9,6 +9,7 @@
 ; surname <- cs:inl()
 ;
 ; cs:outl(name, ' ', surname, ' ')
+
 cs:outl('this must be yes: ', @yes)
 
 ; cs:outl('cs:outl() returns: ', cs:outl())

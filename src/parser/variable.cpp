@@ -19,10 +19,10 @@ Variable::Variable(datatypes::AbstractDataType *value, std::string name)
 
 std::string Variable::getName()
 {
-    return name;
+    return this->name;
 }
 
 datatypes::AbstractDataType* Variable::getValue()
 {
-    return value;
+    return this->value;
 }

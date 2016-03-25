@@ -11,7 +11,7 @@ using namespace husky;
  * If the variable does not exist returns NULL pointer
  *
  */
-Variable *Parser::getVar(std::string varname)
+Variable *Parser::getVar(std::string varname, bool throw_error)
 {
     int i = 0;
 
@@ -21,9 +21,11 @@ Variable *Parser::getVar(std::string varname)
         }
     }
 
-    this->error(
-        "(variable finder)", "variable '" + varname + "' does not exist"
-    );
+    if (throw_error) {
+        this->error(
+            "(variable finder)", "variable '" + varname + "' does not exist"
+        );
+    }
 
     return NULL;
 }

@@ -5,7 +5,7 @@
 
 namespace husky { namespace datatypes {
 
-    AbstractDataType *router(husky::Parser *, char);
+    AbstractDataType *router(husky::Parser *, char, bool);
 
 }}
 
